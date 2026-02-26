@@ -12,13 +12,22 @@ Descubrimiento antes de planificar. Para tareas con scope ambiguo o incertidumbr
 ## Proceso
 
 ```
-SHAPING
-1. Cargar insights (planning + design)
-2. → Worker: researcher (analisis)
-   Pregunta: "Cual es el scope real? Cuantos archivos? Que dependencies?"
-   Produce: analysis report
+0. Crear .artifacts/ y escribir .artifacts/meta.yaml:
+   slug: {feature-slug}
+   gravity: 4
+   started: {fecha}
 
-3. Shaped brief:
+SHAPING
+1. Cargar insights (planning + design) de memory/user-insights.yaml
+
+2. ACCION REQUERIDA — Spawneear subagente (Task tool, subagent_type: Explore):
+   - Instrucciones: contenido completo de workers/researcher.md
+   - Modo: shaping (analisis profundo)
+   - Pregunta: "Cual es el scope real? Cuantos archivos? Que dependencies?"
+   - Output esperado: analysis report
+   - Retorno: resumen + scope + riesgos + recomendaciones
+
+3. Con el analysis report, crear .artifacts/shaped-brief.md:
    - Frame: problema a resolver + constraints
    - Shape: approach seleccionado + justificacion
    - Slices: division en incrementos entregables
@@ -26,13 +35,13 @@ SHAPING
 4. HITL: "El scope es correcto? El approach tiene sentido?"
 
 FULL CYCLE
-5. → Ejecutar flow full-cycle.md con shaped brief como input adicional
-   El planner recibe el shaped brief ademas de sus inputs normales
+5. Ejecutar flow full-cycle.md con shaped brief como input adicional
+   El planner recibe .artifacts/shaped-brief.md ademas de sus inputs normales
 ```
 
 ## Artefactos
 
-Directorio `openspec/changes/{slug}/`:
+Directorio `.artifacts/`:
 
 ```
 shaped-brief.md  # Frame + shape + slices (PRE-planificacion)

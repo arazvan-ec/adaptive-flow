@@ -70,8 +70,8 @@ User Request
        │
        ▼
 ┌─────────────┐
-│   Hooks      │  Automatic quality gates
-│  (validation)│  pre-commit / post-plan / pre-work / post-review
+│   Hooks      │  Automatic quality gates (via .claude/settings.json)
+│  (validation)│  pre-commit-guard / post-artifact-check / on-stop
 └──────┬──────┘
        │
        ▼
@@ -90,19 +90,45 @@ User Request
 | Compound Capture | `/adaptive-flow:compound-capture` | Extract learnings after completing a feature |
 | Discover | `/adaptive-flow:discover --seed` | Analyze your stack and bootstrap memory |
 
+## Getting Started (for existing users)
+
+The framework comes with 8 starter insights in `memory/user-insights.yaml` that you can
+adjust, pause, or retire. To add your own: `/adaptive-flow:insights-manager --add`.
+To analyze your stack and bootstrap project-specific memory: `/adaptive-flow:discover --seed`.
+
 ## Structure
 
 ```
 adaptive-flow/
-├── CLAUDE.md              # Entry point (~100 lines, always loaded)
+├── CLAUDE.md              # Entry point (routing + memory pointers, ~35 lines)
+├── .claude/
+│   └── settings.json      # Claude Code hooks configuration
 ├── flows/                 # 4 gravity-based processes
 ├── workers/               # 4 fresh-context subagents
-├── hooks/                 # 4 deterministic quality gates
-├── memory/                # 4 persistent memory files
-├── templates/             # 4 artifact templates
-├── core/                  # 4 reference guides (loaded on demand)
-└── skills/                # 4 invocable skills
+├── hooks/                 # Quality gate scripts (registered via .claude/settings.json)
+├── memory/                # Persistent memory files
+├── templates/             # Artifact templates
+├── core/                  # Reference guides (loaded on demand)
+└── skills/                # Invocable skills
 ```
+
+## Workers (fresh-context subagents)
+
+| Worker | When | Context received |
+|--------|------|-----------------|
+| planner | Gravity 2-4 | Flow + existing specs + planning insights |
+| implementer | Gravity 2-4 | Plan + implementation insights |
+| reviewer | Gravity 3-4 | Code + specs + review insights |
+| researcher | When analysis needed | Specific question |
+
+Workers run with `context: fork` — fresh context, return only summary.
+
+## Compound: Every task improves the next
+
+After completing a gravity 3+ task, run `/adaptive-flow:compound-capture` to:
+- Extract patterns and anti-patterns → `memory/learnings.yaml`
+- Propose discovered insights → `memory/discovered-insights.yaml`
+- Generate briefing for the next task
 
 ## Key Concepts
 

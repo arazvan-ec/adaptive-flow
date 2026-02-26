@@ -41,6 +41,12 @@ Referencia: `core/solid-reference.md`
 
 Referencia: `core/security-guide.md`
 
+## Carga de referencias
+
+- SIEMPRE cargar `core/solid-reference.md` para evaluar SOLID compliance
+- SIEMPRE cargar `core/security-guide.md` para evaluar seguridad
+- Si la tarea involucra API endpoints → cargar `core/api-patterns.md`
+
 ## Contexto que recibe
 
 ```yaml

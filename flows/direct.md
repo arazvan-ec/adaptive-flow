@@ -35,8 +35,8 @@ Solo se aplican insights de alta influencia. No se cargan insights de planning n
 
 ## Quality Gate
 
-- Tests pasan (hook: pre-commit)
-- Lint limpio (hook: pre-commit)
+- Tests pasan antes de commit
+- Lint limpio antes de commit
 
 ## Ejemplo
 

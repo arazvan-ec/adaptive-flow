@@ -24,7 +24,7 @@ Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren plani
 
 ## Artefactos
 
-Un solo archivo combinado en `openspec/changes/{slug}/plan-and-tasks.md`:
+Un solo archivo combinado en `memory/current-task/plan-and-tasks.md`:
 
 ```markdown
 # {Feature Name}

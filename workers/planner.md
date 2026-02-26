@@ -61,7 +61,7 @@ inputs:
       - discovered-insights (status: accepted)
   - learnings: string     # memory/learnings.yaml (si existe)
   - compound_briefing: string  # memory/next-briefing.md (si existe)
-  - existing_specs: list  # Specs existentes en openspec/ (si hay)
+  - existing_specs: list  # Specs existentes en memory/current-task/ (si hay)
   - shaped_brief: string  # Solo en Gravedad 4 (del researcher)
 ```
 

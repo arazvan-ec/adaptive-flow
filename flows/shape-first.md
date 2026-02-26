@@ -32,7 +32,7 @@ FULL CYCLE
 
 ## Artefactos
 
-Directorio `openspec/changes/{slug}/`:
+Directorio `memory/current-task/`:
 
 ```
 shaped-brief.md  # Frame + shape + slices (PRE-planificacion)

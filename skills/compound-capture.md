@@ -18,7 +18,7 @@ y genera briefing para la siguiente tarea.
 
 ```
 1. Leer los artefactos de la feature completada:
-   - spec.md, design.md, tasks.md (de openspec/changes/{slug}/)
+   - spec.md, design.md, tasks.md (de memory/current-task/)
    - Git diff de todos los commits de la feature
    - QA report del reviewer (si existe)
 
@@ -39,7 +39,7 @@ y genera briefing para la siguiente tarea.
       Formato: { id, observation, evidence, confidence, when_to_apply, status: proposed }
 
    d. RETROSPECTIVE — Que fue bien, que mejorar?
-      → Escribir openspec/changes/{slug}/retrospective.md
+      → Escribir memory/current-task/retrospective.md
 
 3. Generar briefing para proxima tarea:
    → Escribir memory/next-briefing.md

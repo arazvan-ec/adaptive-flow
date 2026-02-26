@@ -41,7 +41,7 @@ COMPOUND
 
 ## Artefactos
 
-Directorio `openspec/changes/{slug}/`:
+Directorio `memory/current-task/`:
 
 ```
 spec.md          # QUE debe hacer el sistema (acceptance criteria)

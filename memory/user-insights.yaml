@@ -32,7 +32,7 @@ insights:
     observation: "Writing tests before implementation produces more maintainable code and catches edge cases earlier"
     reasoning: "The test-first approach forces thinking about interfaces and behavior before implementation details"
     when_to_apply: [implementation]
-    influence: medium
+    influence: high
     status: active
     tags: [testing, quality]
     added: 2026-02-26
@@ -62,7 +62,7 @@ insights:
     observation: "Input validation should happen at system boundaries (API endpoints, CLI args, event handlers), not deep inside business logic"
     reasoning: "Trust internal code, validate external input. This avoids redundant checks and keeps domain logic clean"
     when_to_apply: [implementation, design]
-    influence: medium
+    influence: high
     status: active
     tags: [security, architecture]
     added: 2026-02-26
@@ -82,7 +82,7 @@ insights:
     observation: "Changes affecting 4+ files benefit from a brief plan — even 5 minutes of planning prevents hours of rework"
     reasoning: "Planning surfaces hidden dependencies and reduces the 70% problem (unexpected complexity)"
     when_to_apply: [routing, planning]
-    influence: medium
+    influence: high
     status: active
     tags: [planning, efficiency]
     added: 2026-02-26

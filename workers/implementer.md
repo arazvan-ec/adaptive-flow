@@ -82,6 +82,19 @@ inputs:
 - spec.md (el implementer sigue tasks.md, no la spec directamente)
 - Output del reviewer (salvo en re-work)
 
+## Carga de referencias
+
+- SIEMPRE cargar `core/testing-guide.md` como referencia de TDD
+- Si la tarea involucra API endpoints → cargar `core/api-patterns.md`
+- Si la tarea involucra auth, pagos, datos sensibles → cargar `core/security-guide.md`
+
+## Tracking de progreso
+
+Al iniciar la implementacion, crear una lista de tareas usando TodoWrite desde tasks.md.
+Marcar cada task como `in_progress` antes de empezar y `completed` al terminar.
+Mantener exactamente una task como `in_progress` a la vez.
+Esto da visibilidad al usuario del progreso en tiempo real.
+
 ## Principios de implementacion
 
 1. **Tests primero**: Siempre escribir el test antes del codigo

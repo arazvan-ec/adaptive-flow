@@ -83,3 +83,53 @@
 Todas las tareas fueron implementadas en un unico commit (9973c35). En retrospectiva,
 debio haberse partido en al menos 2 commits: P0 (fixes) y P1+P2 (mejoras).
 Ver analisis completo en `plan-improve-workflow-analysis.md`.
+
+---
+
+## Plan siguiente: Separacion Compound como Provider
+
+**Plan:** `.artifacts/plan-compound-provider-separation.md`
+**Estado:** PENDIENTE DE DECISION DEL USUARIO
+
+### Opciones propuestas
+
+| Opcion | Descripcion | Esfuerzo | Riesgo |
+|--------|-------------|----------|--------|
+| A | Plan completo: interface + mover archivos + refactorizar flows | 17 tareas, ~25 archivos | Alto |
+| B | **Recomendada**: Solo documentar contrato (interface) + marcadores en flows | ~5 tareas, ~8 archivos | Bajo |
+| C | Reorganizar directorios sin interface | ~10 tareas, ~20 archivos | Medio |
+| D | No hacer nada | 0 tareas | Cero |
+
+### Tareas (pendientes de decision)
+
+**Si se elige A (plan completo):**
+
+Fase 1: Interface y restructurar
+- [ ] 1.1: Crear `providers/compound-interface.md`
+- [ ] 1.2: Crear `providers/compound-local/provider.md`
+- [ ] 1.3: Mover `skills/compound-capture.md` → provider
+- [ ] 1.4: Mover `skills/insights-manager.md` → provider
+- [ ] 1.5: Separar `skills/discover.md` (stack-detection vs insight-suggest)
+- [ ] 1.6: Mover `memory/` → provider
+- [ ] 1.7: Actualizar `.claude-plugin/plugin.json`
+- [ ] 1.8: Actualizar `CLAUDE.md`
+
+Fase 2: Desacoplar flows y workers
+- [ ] 2.1: Refactor `flows/direct.md`
+- [ ] 2.2: Refactor `flows/plan-execute.md`
+- [ ] 2.3: Refactor `flows/full-cycle.md`
+- [ ] 2.4: Refactor `flows/shape-first.md`
+- [ ] 2.5: Refactor workers (planner, implementer, reviewer)
+- [ ] 2.6: Refactor `hooks/on-stop.sh`
+
+Fase 3: Documentacion
+- [ ] 3.1: Actualizar `README.md`
+- [ ] 3.2: Crear `providers/README.md`
+- [ ] 3.3: Actualizar templates
+
+**Si se elige B (recomendada):**
+- [ ] B.1: Crear `providers/compound-interface.md` con contrato
+- [ ] B.2: Agregar marcadores `## Compound Provider` en flows
+- [ ] B.3: Agregar marcadores en workers
+- [ ] B.4: Agregar nota en CLAUDE.md sobre arquitectura provider
+- [ ] B.5: Actualizar README.md con seccion de providers

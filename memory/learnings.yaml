@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────────────────────────────
+# Learnings — Patrones tecnicos del proyecto (Tipo 2)
+# ─────────────────────────────────────────────────────────────────────
+#
+# Capturados durante compound capture al finalizar features de gravedad 3+.
+# Representan conocimiento tecnico especifico de ESTE proyecto.
+#
+# Schema por learning:
+#   - id: string (kebab-case, unico)
+#     type: pattern | anti-pattern | boundary
+#       pattern      → algo que funciono bien
+#       anti-pattern → algo que causo problemas
+#       boundary     → el 70% problem (complejidad real vs esperada)
+#     description: string (que se aprendio)
+#     context: string (en que feature/situacion)
+#     impact: high | medium | low
+#     tags: [string]
+#     source_feature: string (slug de la feature donde se descubrio)
+#     captured: YYYY-MM-DD
+#
+# Los learnings se cargan durante planning (gravedad 2+) para informar
+# decisiones. No influencian directamente como los insights — son
+# informacion de contexto.
+# ─────────────────────────────────────────────────────────────────────
+
+learnings: []

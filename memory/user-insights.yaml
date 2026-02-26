@@ -1,0 +1,109 @@
+# ─────────────────────────────────────────────────────────────────────
+# User Insights — Meta-conocimiento del usuario sobre como trabajar con IA
+# ─────────────────────────────────────────────────────────────────────
+#
+# Estos insights representan la experiencia del usuario sobre que funciona
+# y que no cuando trabaja con agentes de IA. Son heuristicas graduadas,
+# no reglas binarias.
+#
+# Schema por insight:
+#   - id: string (kebab-case, unico)
+#     observation: string (que ha observado el usuario)
+#     reasoning: string (por que cree que funciona)
+#     when_to_apply: [planning, design, implementation, review, routing]
+#     influence: high | medium | low
+#       high   → aplicar proactivamente
+#       medium → sugerir si relevante
+#       low    → solo si el usuario pregunta
+#     status: active | paused | retired
+#     tags: [string]
+#     added: YYYY-MM-DD
+#     last_validated: YYYY-MM-DD
+#
+# El usuario tiene la ultima palabra. Estos insights siempre tienen
+# prioridad sobre los descubiertos por la IA.
+# ─────────────────────────────────────────────────────────────────────
+
+insights:
+
+  # ── Starter insights (universales, ajusta o retira segun tu experiencia) ──
+
+  - id: tdd-produces-better-code
+    observation: "Writing tests before implementation produces more maintainable code and catches edge cases earlier"
+    reasoning: "The test-first approach forces thinking about interfaces and behavior before implementation details"
+    when_to_apply: [implementation]
+    influence: medium
+    status: active
+    tags: [testing, quality]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: solid-in-design-phase
+    observation: "Applying SOLID analysis during design (not after) results in code that scales better and needs fewer rewrites"
+    reasoning: "Catching architectural issues before implementation is 10x cheaper than refactoring after"
+    when_to_apply: [design, planning]
+    influence: medium
+    status: active
+    tags: [solid, architecture]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: small-focused-functions
+    observation: "Functions under 20 lines with a single responsibility are easier to test, debug, and reuse"
+    reasoning: "Smaller units have fewer reasons to change and are easier to compose"
+    when_to_apply: [implementation, review]
+    influence: medium
+    status: active
+    tags: [code-quality, srp]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: validate-at-boundaries
+    observation: "Input validation should happen at system boundaries (API endpoints, CLI args, event handlers), not deep inside business logic"
+    reasoning: "Trust internal code, validate external input. This avoids redundant checks and keeps domain logic clean"
+    when_to_apply: [implementation, design]
+    influence: medium
+    status: active
+    tags: [security, architecture]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: atomic-commits
+    observation: "One commit per logical change makes history readable, bisectable, and revertable"
+    reasoning: "Atomic commits allow precise rollbacks and make code review easier"
+    when_to_apply: [implementation]
+    influence: medium
+    status: active
+    tags: [git, workflow]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: plan-before-complex-changes
+    observation: "Changes affecting 4+ files benefit from a brief plan — even 5 minutes of planning prevents hours of rework"
+    reasoning: "Planning surfaces hidden dependencies and reduces the 70% problem (unexpected complexity)"
+    when_to_apply: [routing, planning]
+    influence: medium
+    status: active
+    tags: [planning, efficiency]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: no-premature-abstraction
+    observation: "Three similar lines of code are better than a premature abstraction. Extract only when the pattern repeats 3+ times"
+    reasoning: "Wrong abstractions are harder to fix than duplication. Wait for the pattern to emerge"
+    when_to_apply: [implementation, review]
+    influence: medium
+    status: active
+    tags: [code-quality, simplicity]
+    added: 2026-02-26
+    last_validated: 2026-02-26
+
+  - id: explain-why-not-what
+    observation: "Comments should explain WHY, not WHAT. The code already tells what it does"
+    reasoning: "Why-comments preserve intent and help future developers understand decisions"
+    when_to_apply: [implementation, review]
+    influence: low
+    status: active
+    tags: [code-quality, documentation]
+    added: 2026-02-26
+    last_validated: 2026-02-26

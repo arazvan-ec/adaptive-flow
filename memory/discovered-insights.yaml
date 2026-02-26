@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────────
+# Discovered Insights — Patrones descubiertos por la IA durante compound
+# ─────────────────────────────────────────────────────────────────────
+#
+# Estos insights son propuestos por la IA basandose en patrones observados
+# across features. El usuario decide si aceptarlos, rechazarlos o modificarlos.
+#
+# Schema por insight:
+#   - id: string (kebab-case, unico)
+#     observation: string (que patron detecto la IA)
+#     evidence: string (de donde viene la evidencia)
+#     confidence: float (0.0 - 1.0)
+#     when_to_apply: [planning, design, implementation, review]
+#     status: proposed | accepted | rejected | promoted
+#       proposed  → pendiente de revision por el usuario
+#       accepted  → el usuario lo acepto (influence: medium por defecto)
+#       rejected  → el usuario lo descarto
+#       promoted  → movido a user-insights.yaml (confidence >= 0.7)
+#     tags: [string]
+#     discovered: YYYY-MM-DD
+#     source_feature: string (en que feature se descubrio)
+#
+# Ciclo de vida:
+#   1. IA propone (status: proposed)
+#   2. Usuario revisa
+#   3. Si acepta → status: accepted
+#   4. Si confidence >= 0.7 y el usuario quiere → status: promoted
+#      (se copia a user-insights.yaml y se marca aqui como promoted)
+# ─────────────────────────────────────────────────────────────────────
+
+discovered: []

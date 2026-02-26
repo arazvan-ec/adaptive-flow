@@ -1,0 +1,27 @@
+{
+  "name": "adaptive-flow",
+  "version": "1.0.0",
+  "description": "Compound engineering framework for Claude Code. Adapts process gravity to task complexity.",
+  "skills": [
+    {
+      "name": "insights-manager",
+      "description": "Manage user insights (add, review, pause, retire, promote)",
+      "path": "../skills/insights-manager.md"
+    },
+    {
+      "name": "solid-analyzer",
+      "description": "Contextual SOLID analysis (baseline, design, verify modes)",
+      "path": "../skills/solid-analyzer.md"
+    },
+    {
+      "name": "compound-capture",
+      "description": "Post-feature knowledge capture (patterns, learnings, insights, briefing)",
+      "path": "../skills/compound-capture.md"
+    },
+    {
+      "name": "discover",
+      "description": "Analyze stack and bootstrap project memory (--seed, --profile, --status)",
+      "path": "../skills/discover.md"
+    }
+  ]
+}

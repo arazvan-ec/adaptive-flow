@@ -1,0 +1,21 @@
+# ─────────────────────────────────────────────────────────────────────
+# Patterns — Patrones de codigo extraidos del proyecto
+# ─────────────────────────────────────────────────────────────────────
+#
+# Capturados durante compound capture. Representan patterns de codigo
+# concretos que se usan en este proyecto y que deberan reutilizarse.
+#
+# Schema por pattern:
+#   - id: string (kebab-case, unico)
+#     name: string (nombre del pattern)
+#     description: string (que hace y por que se usa)
+#     example_file: string (path a un archivo que lo ejemplifica)
+#     usage_count: int (cuantas veces se ha usado)
+#     tags: [string]
+#     captured: YYYY-MM-DD
+#
+# Los patterns se cargan cuando el planner o implementer necesitan
+# referencia de como se hacen las cosas en este proyecto.
+# ─────────────────────────────────────────────────────────────────────
+
+patterns: []

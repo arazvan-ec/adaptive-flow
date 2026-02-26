@@ -67,8 +67,11 @@ if [ "$FILENAME" = "plan-and-tasks.md" ] && [ -f "$FILE_PATH" ]; then
   if ! grep -qi "acceptance criteria\|acceptance criterion" "$FILE_PATH"; then
     WARNINGS="${WARNINGS}WARNING: plan-and-tasks.md missing 'Acceptance Criteria' section. "
   fi
-  if ! grep -qi "## Plan\|## Tasks" "$FILE_PATH"; then
-    WARNINGS="${WARNINGS}WARNING: plan-and-tasks.md should have '## Plan' and '## Tasks' sections. "
+  if ! grep -qi "## Plan" "$FILE_PATH"; then
+    WARNINGS="${WARNINGS}WARNING: plan-and-tasks.md missing '## Plan' section. "
+  fi
+  if ! grep -qi "## Tasks" "$FILE_PATH"; then
+    WARNINGS="${WARNINGS}WARNING: plan-and-tasks.md missing '## Tasks' section. "
   fi
 fi
 

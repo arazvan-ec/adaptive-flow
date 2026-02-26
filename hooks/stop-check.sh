@@ -17,11 +17,17 @@ TASK_DIR="$PLUGIN_ROOT/memory/current-task"
 META_FILE="$TASK_DIR/meta.yaml"
 
 # ── Prevent infinite loops ─────────────────────────────────────────
-# If this hook already triggered a stop prevention, don't block again
-LOCK_FILE="/tmp/adaptive-flow-stop-check-$$"
-if [ -f "/tmp/adaptive-flow-stop-active" ]; then
-  # Already blocked once this session, allow stop now
-  rm -f "/tmp/adaptive-flow-stop-active"
+# Track how many times the hook has blocked stop using a counter file.
+# The counter lives inside the task directory (not /tmp) so it can't be
+# trivially deleted without also modifying the task workspace.
+BLOCK_COUNTER_FILE="$TASK_DIR/.stop-block-count"
+BLOCK_COUNT=0
+if [ -f "$BLOCK_COUNTER_FILE" ]; then
+  BLOCK_COUNT=$(cat "$BLOCK_COUNTER_FILE" 2>/dev/null || echo "0")
+fi
+# After blocking twice, allow stop to prevent truly infinite loops
+if [ "$BLOCK_COUNT" -ge 2 ]; then
+  rm -f "$BLOCK_COUNTER_FILE"
   echo "{}"
   exit 0
 fi
@@ -34,19 +40,14 @@ if [ ! -f "$META_FILE" ]; then
 fi
 
 # ── Parse gravity from meta.yaml ───────────────────────────────────
-GRAVITY=""
-if command -v python3 &>/dev/null; then
-  GRAVITY=$(python3 -c "
-import yaml, sys
-try:
-    with open('$META_FILE') as f:
-        data = yaml.safe_load(f)
-    print(data.get('gravity', 0))
-except Exception:
-    print(0)
-" 2>/dev/null || echo "0")
-else
-  GRAVITY=$(grep -E '^gravity:' "$META_FILE" 2>/dev/null | awk '{print $2}' || echo "0")
+# Use grep as the primary parser (no external dependencies).
+# Only accept numeric values; default to 3 (safe/strict) if unparseable
+# to avoid silently bypassing enforcement for high-gravity tasks.
+GRAVITY=$(grep -E '^gravity:\s*[0-9]+' "$META_FILE" 2>/dev/null | head -1 | awk '{print $2}')
+if ! [[ "$GRAVITY" =~ ^[0-9]+$ ]]; then
+  # If gravity cannot be parsed, default to 3 (enforce) rather than 0 (skip).
+  # This prevents bypassing enforcement when the file is malformed.
+  GRAVITY=3
 fi
 
 # ── Only enforce for gravity 3+ ───────────────────────────────────
@@ -63,5 +64,6 @@ if [ -f "$TASK_DIR/retrospective.md" ]; then
 fi
 
 # ── Block stop and remind about compound-capture ───────────────────
-touch "/tmp/adaptive-flow-stop-active"
+# Increment block counter (stored in task dir, not /tmp)
+echo $((BLOCK_COUNT + 1)) > "$BLOCK_COUNTER_FILE"
 echo "{\"decision\": \"block\", \"reason\": \"This is a gravity ${GRAVITY} task. Run /adaptive-flow:compound-capture before completing to extract learnings and patterns. This maintains the compound engineering loop.\"}"

@@ -1,6 +1,6 @@
 # Adaptive Flow v2.0 - Tasklist
 
-> Estado: `NOT_STARTED` | Ultima actualizacion: 2026-02-26
+> Estado: `IN_PROGRESS` | Ultima actualizacion: 2026-02-26
 >
 > Leyenda: `[ ]` Pendiente | `[~]` En progreso | `[x]` Completada | `[!]` Bloqueada
 
@@ -10,47 +10,47 @@
 
 ### P0-3: Adelgazar CLAUDE.md
 > **Paralelizable:** No (debe hacerse primero, otros tasks dependen de esto)
-> **En vivo:** No
+> **En vivo:** Si (commit 9dd06fe)
 
-- [ ] Leer CLAUDE.md actual y catalogar cada seccion
-- [ ] Mover contenido de Getting Started a README.md
-- [ ] Mover tabla de workers (ya documentada en workers/ y flows/)
-- [ ] Mover seccion de hooks (seran auto-registrados via hooks.json)
-- [ ] Mover lista de skills (ya en plugin.json)
-- [ ] Mover seccion de compound (ya en skills/compound-capture.md)
-- [ ] Mover seccion de estructura (ya en README.md)
-- [ ] Reescribir CLAUDE.md con solo: routing table + memory pointers + principios (~35 lineas)
-- [ ] Verificar que no se perdio informacion critica
+- [x] Leer CLAUDE.md actual y catalogar cada seccion
+- [x] Mover contenido de Getting Started a README.md
+- [x] Mover tabla de workers (ya documentada en workers/ y flows/)
+- [x] Mover seccion de hooks (seran auto-registrados via hooks.json)
+- [x] Mover lista de skills (ya en plugin.json)
+- [x] Mover seccion de compound (ya en skills/compound-capture.md)
+- [x] Mover seccion de estructura (ya en README.md)
+- [x] Reescribir CLAUDE.md con solo: routing table + memory pointers + principios (~35 lineas)
+- [x] Verificar que no se perdio informacion critica
 
 ### P0-2: Corregir convencion openspec/changes/{slug}/
 > **Paralelizable:** No (depende de P0-3)
-> **En vivo:** No
+> **En vivo:** Si (commit 9dd06fe)
 
-- [ ] Crear directorio `memory/current-task/`
-- [ ] Modificar `flows/direct.md` - eliminar referencias a openspec/
-- [ ] Modificar `flows/plan-execute.md` - cambiar openspec/ → memory/current-task/
-- [ ] Modificar `flows/full-cycle.md` - cambiar openspec/ → memory/current-task/
-- [ ] Modificar `flows/shape-first.md` - cambiar openspec/ → memory/current-task/
-- [ ] Modificar `workers/planner.md` - actualizar referencias de paths
-- [ ] Modificar `skills/compound-capture.md` - actualizar todas las referencias
-- [ ] Verificar que no quedan referencias a openspec/ en ningun archivo
+- [x] Crear directorio `memory/current-task/`
+- [x] Modificar `flows/direct.md` - no tenia referencias (skip)
+- [x] Modificar `flows/plan-execute.md` - cambiar openspec/ → memory/current-task/
+- [x] Modificar `flows/full-cycle.md` - cambiar openspec/ → memory/current-task/
+- [x] Modificar `flows/shape-first.md` - cambiar openspec/ → memory/current-task/
+- [x] Modificar `workers/planner.md` - actualizar referencias de paths
+- [x] Modificar `skills/compound-capture.md` - actualizar todas las referencias
+- [x] Verificar que no quedan referencias a openspec/ en ningun archivo
 
 ### P0-1: Crear Plugin Hooks via hooks/hooks.json
 > **Paralelizable:** No (depende de P0-2 para conocer paths de artefactos)
-> **En vivo:** No
+> **En vivo:** Si (commit 9dd06fe)
 
-- [ ] Crear `hooks/hooks.json` con registro de todos los hooks
-- [ ] Crear `hooks/session-init.sh` (SessionStart: startup/resume)
-- [ ] Crear `hooks/post-compact.sh` (SessionStart: compact)
-- [ ] Crear `hooks/pre-write-guard.sh` (PreToolUse: Write|Edit)
-- [ ] Crear `hooks/post-write-check.sh` (PostToolUse: Write|Edit)
-- [ ] Crear `hooks/stop-check.sh` (Stop)
-- [ ] Hacer todos los scripts ejecutables (chmod +x)
-- [ ] Eliminar `hooks/pre-commit.sh` (reemplazado)
-- [ ] Eliminar `hooks/post-plan.sh` (reemplazado)
-- [ ] Eliminar `hooks/pre-work.sh` (reemplazado)
-- [ ] Eliminar `hooks/post-review.sh` (reemplazado)
-- [ ] Verificar que hooks.json es JSON valido
+- [x] Crear `hooks/hooks.json` con registro de todos los hooks
+- [x] Crear `hooks/session-init.sh` (SessionStart: startup/resume)
+- [x] Crear `hooks/post-compact.sh` (SessionStart: compact)
+- [x] Crear `hooks/pre-write-guard.sh` (PreToolUse: Write|Edit)
+- [x] Crear `hooks/post-write-check.sh` (PostToolUse: Write|Edit)
+- [x] Crear `hooks/stop-check.sh` (Stop)
+- [x] Hacer todos los scripts ejecutables (chmod +x)
+- [x] Eliminar `hooks/pre-commit.sh` (reemplazado)
+- [x] Eliminar `hooks/post-plan.sh` (reemplazado)
+- [x] Eliminar `hooks/pre-work.sh` (reemplazado)
+- [x] Eliminar `hooks/post-review.sh` (reemplazado)
+- [x] Verificar que hooks.json es JSON valido
 
 ---
 
@@ -58,21 +58,21 @@
 
 ### P1-4: Promover Insights Criticos a Influencia Alta
 > **Paralelizable:** Si (independiente de P0)
-> **En vivo:** No
+> **En vivo:** Si (commit 9dd06fe)
 
-- [ ] Modificar `memory/user-insights.yaml`: `tdd-produces-better-code` → influence: high
-- [ ] Modificar `memory/user-insights.yaml`: `plan-before-complex-changes` → influence: high
-- [ ] Modificar `memory/user-insights.yaml`: `validate-at-boundaries` → influence: high
-- [ ] Verificar que el formato YAML sigue siendo valido
+- [x] Modificar `memory/user-insights.yaml`: `tdd-produces-better-code` → influence: high
+- [x] Modificar `memory/user-insights.yaml`: `plan-before-complex-changes` → influence: high
+- [x] Modificar `memory/user-insights.yaml`: `validate-at-boundaries` → influence: high
+- [x] Verificar que el formato YAML sigue siendo valido
 
 ### P1-1: Hook SessionStart para Inicializacion de Memoria
 > **Paralelizable:** No (cubierto por P0-1)
-> **En vivo:** No
+> **En vivo:** Si (commit 9dd06fe)
 
-- [ ] (Cubierto por P0-1: session-init.sh ya implementa esta funcionalidad)
-- [ ] Verificar que el hook retorna JSON valido con additionalContext
-- [ ] Verificar que parsea correctamente user-insights.yaml
-- [ ] Verificar que maneja archivos inexistentes gracefully
+- [x] (Cubierto por P0-1: session-init.sh ya implementa esta funcionalidad)
+- [x] Verificar que el hook retorna JSON valido con additionalContext
+- [x] Verificar que parsea correctamente user-insights.yaml
+- [x] Verificar que maneja archivos inexistentes gracefully
 
 ### P1-3: Convertir Workers en Skills con SKILL.md
 > **Paralelizable:** No (depende de P0-2 para paths correctos)
@@ -179,17 +179,17 @@ P0-2 ──→ P2-4 (Plan mode)
 
 | Tarea | Prioridad | Estado | Dependencias | Paralelizable |
 |-------|-----------|--------|--------------|---------------|
-| P0-3: Adelgazar CLAUDE.md | Critico | `[ ] Pendiente` | Ninguna | No (primera) |
-| P0-2: Fix openspec/ | Critico | `[ ] Pendiente` | P0-3 | No |
-| P0-1: hooks/hooks.json | Critico | `[ ] Pendiente` | P0-2 | No |
-| P1-4: Promover insights | Importante | `[ ] Pendiente` | Ninguna | **Si** |
-| P1-1: SessionStart hook | Importante | `[ ] Pendiente` | P0-1 | No (cubierto) |
+| P0-3: Adelgazar CLAUDE.md | Critico | `[x] En vivo` | Ninguna | No (primera) |
+| P0-2: Fix openspec/ | Critico | `[x] En vivo` | P0-3 | No |
+| P0-1: hooks/hooks.json | Critico | `[x] En vivo` | P0-2 | No |
+| P1-4: Promover insights | Importante | `[x] En vivo` | Ninguna | **Si** |
+| P1-1: SessionStart hook | Importante | `[x] En vivo` | P0-1 | No (cubierto) |
 | P1-3: Workers → Skills | Importante | `[ ] Pendiente` | P0-2 | No |
 | P1-2: Compound automation | Importante | `[ ] Pendiente` | P1-3, P0-1 | No |
 | P2-1: Memory tiers | Mejora | `[ ] Pendiente` | P1-3 | **Si** |
 | P2-2: TodoWrite | Mejora | `[ ] Pendiente` | P1-3 | **Si** |
-| P2-3: Guide triggers | Mejora | `[ ] Pendiente` | P0-1 | **Si** |
+| P2-3: Guide triggers | Mejora | `[x] En vivo` | P0-1 | **Si** |
 | P2-4: Plan mode | Mejora | `[ ] Pendiente` | P0-2 | **Si** |
 
 **Total tareas atomicas:** 74
-**Completadas:** 0 / 74 (0%)
+**Completadas:** 37 / 74 (50%)

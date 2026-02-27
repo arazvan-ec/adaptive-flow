@@ -1,3 +1,12 @@
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Task
+---
+
 # Skill: solid-analyzer
 
 Analisis SOLID contextual con multiples modos de operacion.

@@ -1,4 +1,14 @@
-# Worker: Reviewer
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+  - Task
+---
+
+# Skill: Reviewer
 
 Subagente de revision multi-dimensional. Corre con contexto fresco (`context: fork`).
 

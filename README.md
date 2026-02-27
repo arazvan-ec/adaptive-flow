@@ -64,7 +64,7 @@ User Request
        │
        ▼
 ┌─────────────┐
-│   Workers    │  Fresh-context subagents
+│   Skills     │  Fresh-context subagents (SKILL.md)
 │  (execution) │  planner / implementer / reviewer / researcher
 └──────┬──────┘
        │
@@ -96,12 +96,11 @@ User Request
 adaptive-flow/
 ├── CLAUDE.md              # Entry point (~100 lines, always loaded)
 ├── flows/                 # 4 gravity-based processes
-├── workers/               # 4 fresh-context subagents
-├── hooks/                 # 4 deterministic quality gates
-├── memory/                # 4 persistent memory files
-├── templates/             # 4 artifact templates
-├── core/                  # 4 reference guides (loaded on demand)
-└── skills/                # 4 invocable skills
+├── hooks/                 # Deterministic quality gates
+├── memory/                # Persistent memory files
+├── templates/             # Artifact templates
+├── core/                  # Reference guides (loaded on demand)
+└── skills/                # 8 skills (4 workers + 4 invocable), each with SKILL.md
 ```
 
 ## Key Concepts
@@ -112,8 +111,8 @@ A typo fix doesn't need a full spec-design-implement-review cycle.
 **Insights** — Graduated heuristics that influence AI decisions.
 Not rigid rules. "I've observed X works because Y" with high/medium/low influence.
 
-**Workers** — Subagents that run with fresh context (`context: fork`).
-They don't drag conversation history, keeping focus and saving tokens.
+**Skills** — Subagents that run with fresh context (`context: fork`).
+Auto-discovered from `skills/*/SKILL.md`. They don't drag conversation history, keeping focus and saving tokens.
 
 **Hooks** — Deterministic quality gates that run automatically.
 Tests pass before commit. Plan exists before implementation. No relying on memory.

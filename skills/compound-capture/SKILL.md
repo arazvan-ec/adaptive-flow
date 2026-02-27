@@ -1,3 +1,14 @@
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Edit
+  - Write
+  - Bash
+---
+
 # Skill: compound-capture
 
 Captura de conocimiento post-feature. Extrae patterns, learnings, insights

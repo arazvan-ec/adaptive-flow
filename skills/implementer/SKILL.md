@@ -1,4 +1,17 @@
-# Worker: Implementer
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Edit
+  - Write
+  - Bash
+  - Task
+  - TodoWrite
+---
+
+# Skill: Implementer
 
 Subagente de implementacion. Corre con contexto fresco (`context: fork`).
 
@@ -18,6 +31,19 @@ Para cada task en tasks.md:
   6. Marcar task como completada
   7. Commit atomico
 ```
+
+## TodoWrite Integration
+
+Al iniciar, el implementer DEBE crear un TodoWrite con las tareas de tasks.md:
+
+```
+1. Leer tasks.md (o plan-and-tasks.md)
+2. Crear TodoWrite con cada task como item pending
+3. Marcar cada task como in_progress antes de empezar
+4. Marcar cada task como completed al terminar el ciclo TDD
+```
+
+Esto permite al usuario ver el progreso en tiempo real.
 
 ## BCP (Bounded Correction Protocol)
 

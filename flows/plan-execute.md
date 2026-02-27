@@ -13,10 +13,10 @@ Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren plani
 ```
 1. Cargar insights (planning + implementation)
 2. Cargar memory/learnings.yaml (si existe)
-3. → Worker: planner (modo ligero)
+3. → Skill: planner (modo ligero)
    Produce: plan-and-tasks.md (un solo archivo combinado)
 4. HITL: "Este plan captura tu intencion?"
-5. → Worker: implementer (TDD)
+5. → Skill: implementer (TDD)
    Recibe: plan-and-tasks.md + insights de implementation
 6. Verificar: tests + lint
 7. Commit
@@ -43,10 +43,10 @@ Un solo archivo combinado en `memory/current-task/plan-and-tasks.md`:
 - Criterion 2
 ```
 
-## Workers
+## Skills
 
-| Worker | Modo | Contexto |
-|--------|------|----------|
+| Skill | Modo | Contexto |
+|-------|------|----------|
 | planner | ligero | Flow + insights de planning + learnings |
 | implementer | standard | plan-and-tasks.md + insights de implementation |
 

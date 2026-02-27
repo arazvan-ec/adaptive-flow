@@ -16,17 +16,17 @@ Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de
 2. Cargar insights (planning + design + implementation + review)
 
 PLANNING
-3. → Worker: planner (modo completo)
+3. → Skill: planner (modo completo)
    Produce: spec.md, design.md, tasks.md
 4. HITL: "Specs correctas?" → "Diseno correcto?"
 
 IMPLEMENTATION
-5. → Worker: implementer (TDD + BCP)
+5. → Skill: implementer (TDD + BCP)
    Recibe: tasks.md + design.md + insights de implementation
    Produce: codigo + tests
 
 REVIEW
-6. → Worker: reviewer (multi-dimensional)
+6. → Skill: reviewer (multi-dimensional)
    Recibe: diff + spec.md + design.md + insights de review
    Produce: QA report (APPROVED/REJECTED)
 
@@ -50,10 +50,10 @@ tasks.md         # Lista de tareas ordenada
 retrospective.md # Que fue bien, que mejorar (post-compound)
 ```
 
-## Workers
+## Skills
 
-| Worker | Modo | Contexto |
-|--------|------|----------|
+| Skill | Modo | Contexto |
+|-------|------|----------|
 | planner | completo | Flow + insights (planning, design) + learnings + compound briefing |
 | implementer | TDD+BCP | tasks.md + design.md + insights (implementation) + learnings |
 | reviewer | multi-dim | diff + spec.md + design.md + insights (review) |

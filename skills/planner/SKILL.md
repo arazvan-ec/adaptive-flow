@@ -1,4 +1,15 @@
-# Worker: Planner
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Task
+  - WebSearch
+  - WebFetch
+---
+
+# Skill: Planner
 
 Subagente de planificacion. Corre con contexto fresco (`context: fork`).
 
@@ -69,7 +80,7 @@ inputs:
 
 - Historial de conversacion del usuario
 - Codigo fuente completo (solo paths relevantes)
-- Otros workers' output
+- Otros skills' output
 
 ## SOLID Enforcement (modo completo)
 

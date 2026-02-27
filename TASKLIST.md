@@ -1,6 +1,6 @@
 # Adaptive Flow v2.0 - Tasklist
 
-> Estado: `IN_PROGRESS` | Ultima actualizacion: 2026-02-26
+> Estado: `COMPLETE` | Ultima actualizacion: 2026-02-27
 >
 > Leyenda: `[ ]` Pendiente | `[~]` En progreso | `[x]` Completada | `[!]` Bloqueada
 
@@ -76,40 +76,40 @@
 
 ### P1-3: Convertir Workers en Skills con SKILL.md
 > **Paralelizable:** No (depende de P0-2 para paths correctos)
-> **En vivo:** No
+> **En vivo:** Si (commit 0c53050)
 
-- [ ] Crear directorio `skills/planner/`
-- [ ] Crear `skills/planner/SKILL.md` con frontmatter (context: fork, allowed-tools)
-- [ ] Crear directorio `skills/implementer/`
-- [ ] Crear `skills/implementer/SKILL.md` con frontmatter
-- [ ] Crear directorio `skills/reviewer/`
-- [ ] Crear `skills/reviewer/SKILL.md` con frontmatter
-- [ ] Crear directorio `skills/researcher/`
-- [ ] Crear `skills/researcher/SKILL.md` con frontmatter
-- [ ] Migrar `skills/compound-capture.md` → `skills/compound-capture/SKILL.md`
-- [ ] Migrar `skills/insights-manager.md` → `skills/insights-manager/SKILL.md`
-- [ ] Migrar `skills/discover.md` → `skills/discover/SKILL.md`
-- [ ] Migrar `skills/solid-analyzer.md` → `skills/solid-analyzer/SKILL.md`
-- [ ] Eliminar archivos originales de skills/ (4 archivos .md)
-- [ ] Eliminar archivos originales de workers/ (4 archivos .md)
-- [ ] Eliminar directorio `workers/`
-- [ ] Actualizar `.claude-plugin/plugin.json` - eliminar skills array, bumpar a v2.0.0
-- [ ] Actualizar `flows/plan-execute.md` - referenciar workers como skill invocations
-- [ ] Actualizar `flows/full-cycle.md` - referenciar workers como skill invocations
-- [ ] Actualizar `flows/shape-first.md` - referenciar workers como skill invocations
-- [ ] Verificar que todos los skills son descubribles
+- [x] Crear directorio `skills/planner/`
+- [x] Crear `skills/planner/SKILL.md` con frontmatter (context: fork, allowed-tools)
+- [x] Crear directorio `skills/implementer/`
+- [x] Crear `skills/implementer/SKILL.md` con frontmatter
+- [x] Crear directorio `skills/reviewer/`
+- [x] Crear `skills/reviewer/SKILL.md` con frontmatter
+- [x] Crear directorio `skills/researcher/`
+- [x] Crear `skills/researcher/SKILL.md` con frontmatter
+- [x] Migrar `skills/compound-capture.md` → `skills/compound-capture/SKILL.md`
+- [x] Migrar `skills/insights-manager.md` → `skills/insights-manager/SKILL.md`
+- [x] Migrar `skills/discover.md` → `skills/discover/SKILL.md`
+- [x] Migrar `skills/solid-analyzer.md` → `skills/solid-analyzer/SKILL.md`
+- [x] Eliminar archivos originales de skills/ (4 archivos .md)
+- [x] Eliminar archivos originales de workers/ (4 archivos .md)
+- [x] Eliminar directorio `workers/`
+- [x] Actualizar `.claude-plugin/plugin.json` - eliminar skills array, bumpar a v2.0.0
+- [x] Actualizar `flows/plan-execute.md` - referenciar workers como skill invocations
+- [x] Actualizar `flows/full-cycle.md` - referenciar workers como skill invocations
+- [x] Actualizar `flows/shape-first.md` - referenciar workers como skill invocations
+- [x] Verificar que todos los skills son descubribles
 
 ### P1-2: Automatizar Compound Capture
 > **Paralelizable:** No (depende de P1-3 y P0-1 para stop hook)
-> **En vivo:** No
+> **En vivo:** Si (commit 5a17116)
 
-- [ ] Definir schema de `memory/current-task/meta.yaml`
-- [ ] Actualizar `flows/plan-execute.md` para escribir meta.yaml al inicio
-- [ ] Actualizar `flows/full-cycle.md` para escribir meta.yaml al inicio
-- [ ] Actualizar `flows/shape-first.md` para escribir meta.yaml al inicio
-- [ ] Verificar que `stop-check.sh` lee meta.yaml correctamente
-- [ ] Verificar que bloquea cuando gravity >= 3 y no hay retrospective.md
-- [ ] Verificar que no bloquea cuando gravity < 3
+- [x] Definir schema de `memory/current-task/meta.yaml`
+- [x] Actualizar `flows/plan-execute.md` para escribir meta.yaml al inicio
+- [x] Actualizar `flows/full-cycle.md` para escribir meta.yaml al inicio
+- [x] Actualizar `flows/shape-first.md` para escribir meta.yaml al inicio
+- [x] Verificar que `stop-check.sh` lee meta.yaml correctamente
+- [x] Verificar que bloquea cuando gravity >= 3 y no hay retrospective.md
+- [x] Verificar que no bloquea cuando gravity < 3
 
 ---
 
@@ -117,22 +117,22 @@
 
 ### P2-1: Carga de Memoria por Niveles
 > **Paralelizable:** Si (independiente de otras P2)
-> **En vivo:** No
+> **En vivo:** Si (commit 741ddc4)
 
-- [ ] Definir que va en cada nivel (1: siempre, 2: al activar flow, 3: bajo demanda)
-- [ ] Actualizar `hooks/session-init.sh` para cargar solo Nivel 1
-- [ ] Actualizar `flows/plan-execute.md` con instrucciones de carga Nivel 2
-- [ ] Actualizar `flows/full-cycle.md` con instrucciones de carga Nivel 2
-- [ ] Actualizar `flows/shape-first.md` con instrucciones de carga Nivel 2
-- [ ] Actualizar `hooks/pre-write-guard.sh` para manejar carga Nivel 3
+- [x] Definir que va en cada nivel (1: siempre, 2: al activar flow, 3: bajo demanda)
+- [x] Actualizar `hooks/session-init.sh` para cargar solo Nivel 1
+- [x] Actualizar `flows/plan-execute.md` con instrucciones de carga Nivel 2
+- [x] Actualizar `flows/full-cycle.md` con instrucciones de carga Nivel 2
+- [x] Actualizar `flows/shape-first.md` con instrucciones de carga Nivel 2
+- [x] Actualizar `hooks/pre-write-guard.sh` para manejar carga Nivel 3
 
 ### P2-2: Integrar con TodoWrite de Claude Code
 > **Paralelizable:** Si (independiente de otras P2)
-> **En vivo:** No
+> **En vivo:** Si (commit 424d724)
 
-- [ ] Actualizar `skills/implementer/SKILL.md` con instrucciones de TodoWrite
-- [ ] Documentar como el implementer debe crear TodoWrite desde tasks.md
-- [ ] Documentar como marcar progreso en tiempo real
+- [x] Actualizar `skills/implementer/SKILL.md` con instrucciones de TodoWrite
+- [x] Documentar como el implementer debe crear TodoWrite desde tasks.md
+- [x] Documentar como marcar progreso en tiempo real
 
 ### P2-3: Triggers de Carga de Guias Core via PreToolUse
 > **Paralelizable:** Si (independiente de otras P2)
@@ -145,11 +145,11 @@
 
 ### P2-4: Integrar con Plan Mode de Claude Code
 > **Paralelizable:** Si (independiente de otras P2)
-> **En vivo:** No
+> **En vivo:** Si (commit c27796c)
 
-- [ ] Agregar nota en `flows/plan-execute.md` sobre integracion con plan mode
-- [ ] Actualizar `hooks/session-init.sh` para detectar permission_mode
-- [ ] Documentar cuando el planner worker no es necesario (plan mode activo + gravity 2)
+- [x] Agregar nota en `flows/plan-execute.md` sobre integracion con plan mode
+- [x] Actualizar `hooks/session-init.sh` para detectar permission_mode
+- [x] Documentar cuando el planner skill no es necesario (plan mode activo + gravity 2)
 
 ---
 
@@ -184,12 +184,12 @@ P0-2 ──→ P2-4 (Plan mode)
 | P0-1: hooks/hooks.json | Critico | `[x] En vivo` | P0-2 | No |
 | P1-4: Promover insights | Importante | `[x] En vivo` | Ninguna | **Si** |
 | P1-1: SessionStart hook | Importante | `[x] En vivo` | P0-1 | No (cubierto) |
-| P1-3: Workers → Skills | Importante | `[ ] Pendiente` | P0-2 | No |
-| P1-2: Compound automation | Importante | `[ ] Pendiente` | P1-3, P0-1 | No |
-| P2-1: Memory tiers | Mejora | `[ ] Pendiente` | P1-3 | **Si** |
-| P2-2: TodoWrite | Mejora | `[ ] Pendiente` | P1-3 | **Si** |
+| P1-3: Workers → Skills | Importante | `[x] En vivo` | P0-2 | No |
+| P1-2: Compound automation | Importante | `[x] En vivo` | P1-3, P0-1 | No |
+| P2-1: Memory tiers | Mejora | `[x] En vivo` | P1-3 | **Si** |
+| P2-2: TodoWrite | Mejora | `[x] En vivo` | P1-3 | **Si** |
 | P2-3: Guide triggers | Mejora | `[x] En vivo` | P0-1 | **Si** |
-| P2-4: Plan mode | Mejora | `[ ] Pendiente` | P0-2 | **Si** |
+| P2-4: Plan mode | Mejora | `[x] En vivo` | P0-2 | **Si** |
 
 **Total tareas atomicas:** 74
-**Completadas:** 37 / 74 (50%)
+**Completadas:** 74 / 74 (100%)

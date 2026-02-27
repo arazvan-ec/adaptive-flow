@@ -50,6 +50,15 @@ Un solo archivo combinado en `memory/current-task/plan-and-tasks.md`:
 | planner | ligero | Flow + insights de planning + learnings |
 | implementer | standard | plan-and-tasks.md + insights de implementation |
 
+## Plan Mode Integration
+
+Cuando Claude Code esta en **Plan Mode** (permission_mode: plan):
+- El planner skill NO es necesario para gravedad 2 — Claude Code ya planifica nativamente
+- En este caso, el flow se simplifica: el usuario planifica directamente y luego pasa a implementar
+- Si plan mode no esta activo, se usa el planner skill normalmente
+
+Deteccion: `session-init.sh` inyecta `plan_mode: true/false` en el contexto de sesion.
+
 ## HITL Checkpoint
 
 Un unico checkpoint despues del plan, antes de implementar.

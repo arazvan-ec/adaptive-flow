@@ -10,21 +10,28 @@ Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren plani
 
 ## Proceso
 
+> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
+
 ```
-1. Cargar insights (planning + implementation)
-2. Cargar memory/learnings.yaml (si existe)
-3. → Skill: planner (modo ligero)
+0. Escribir meta.yaml en memory/current-task/ con:
+   name, gravity: 2, flow: "plan-execute", started: fecha actual, status: "in_progress"
+1. Cargar Tier 2: insights completos + learnings + briefing
+2. → Skill: planner (modo ligero)
    Produce: plan-and-tasks.md (un solo archivo combinado)
-4. HITL: "Este plan captura tu intencion?"
-5. → Skill: implementer (TDD)
+3. HITL: "Este plan captura tu intencion?"
+4. → Skill: implementer (TDD)
    Recibe: plan-and-tasks.md + insights de implementation
-6. Verificar: tests + lint
+5. Verificar: tests + lint
+6. Actualizar meta.yaml → status: "completed"
 7. Commit
 ```
 
 ## Artefactos
 
-Un solo archivo combinado en `memory/current-task/plan-and-tasks.md`:
+Directorio `memory/current-task/`:
+
+- `meta.yaml` — Metadata de la tarea (gravity, flow, status)
+- `plan-and-tasks.md` — Plan y tareas combinados
 
 ```markdown
 # {Feature Name}

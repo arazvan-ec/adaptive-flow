@@ -11,9 +11,14 @@ Descubrimiento antes de planificar. Para tareas con scope ambiguo o incertidumbr
 
 ## Proceso
 
+> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
+
 ```
+0. Escribir meta.yaml en memory/current-task/ con:
+   name, gravity: 4, flow: "shape-first", started: fecha actual, status: "in_progress"
+
 SHAPING
-1. Cargar insights (planning + design)
+1. Cargar Tier 2: insights completos + learnings + briefing
 2. → Skill: researcher (analisis)
    Pregunta: "Cual es el scope real? Cuantos archivos? Que dependencies?"
    Produce: analysis report
@@ -28,6 +33,7 @@ SHAPING
 FULL CYCLE
 5. → Ejecutar flow full-cycle.md con shaped brief como input adicional
    El planner recibe el shaped brief ademas de sus inputs normales
+   (Nota: full-cycle ya gestiona compound capture y actualiza meta.yaml → status: "completed")
 ```
 
 ## Artefactos
@@ -35,6 +41,7 @@ FULL CYCLE
 Directorio `memory/current-task/`:
 
 ```
+meta.yaml        # Metadata de la tarea (gravity, flow, status)
 shaped-brief.md  # Frame + shape + slices (PRE-planificacion)
 spec.md          # Del full-cycle flow
 design.md        # Del full-cycle flow

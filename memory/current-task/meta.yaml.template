@@ -1,0 +1,21 @@
+# ─────────────────────────────────────────────────────────────────────
+# meta.yaml — Current task metadata
+# ─────────────────────────────────────────────────────────────────────
+# Written at step 0 of every flow (gravity 2+).
+# Read by hooks/stop-check.sh to enforce compound-capture for gravity 3+.
+#
+# Schema:
+#   name:     string  — Feature or task name (human-readable)
+#   gravity:  int     — Task gravity (1-4)
+#   flow:     string  — Flow used: direct | plan-execute | full-cycle | shape-first
+#   started:  string  — Date task started (YYYY-MM-DD)
+#   status:   string  — Current status: in_progress | completed
+#
+# Example:
+# ─────────────────────────────────────────────────────────────────────
+
+name: "Feature name"
+gravity: 2
+flow: "plan-execute"
+started: "2026-01-15"
+status: "in_progress"

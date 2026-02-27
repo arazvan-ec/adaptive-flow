@@ -5,6 +5,15 @@
 # Triggered on PreToolUse(Write|Edit).
 # Checks for sensitive files and suggests relevant core guides.
 #
+# Implements TIER 3 (on-demand) memory loading:
+#   Suggests core guides based on file patterns detected at write time.
+#   - core/security-guide.md  ← auth/security files
+#   - core/api-patterns.md    ← controller/route/API files
+#   - core/testing-guide.md   ← test files
+#   - core/solid-reference.md ← (referenced by full-cycle design phase)
+#   These guides are NOT loaded at session start (Tier 1) or flow
+#   activation (Tier 2) — only surfaced here when relevant.
+#
 # Receives tool input JSON on stdin.
 # Exit 0 = allow, Exit 1 = block.
 # ─────────────────────────────────────────────────────────────────────
@@ -38,7 +47,7 @@ for pattern in "${SENSITIVE_PATTERNS[@]}"; do
   fi
 done
 
-# ── Suggest relevant core guides ───────────────────────────────────
+# ── TIER 3: On-demand core guide suggestions ──────────────────────
 SUGGESTIONS=""
 
 # Auth/security files → security guide

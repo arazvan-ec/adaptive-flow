@@ -3,8 +3,18 @@
 # Hook: session-init — Loads memory into context on session start
 # ─────────────────────────────────────────────────────────────────────
 # Triggered on SessionStart (startup/resume).
-# Reads high-influence insights, architecture profile, and learnings.
+# Implements TIER 1 memory loading: high-influence insights,
+# architecture profile, and current task meta.
 # Outputs JSON with additionalContext for Claude.
+#
+# Memory Loading Tiers:
+#   Tier 1 (always, here): user-insights.yaml (high influence only),
+#          architecture-profile.yaml, current-task/meta.yaml
+#   Tier 2 (flow activation): Full user-insights.yaml (all influences),
+#          learnings.yaml, next-briefing.md — loaded by flows (gravity 2+)
+#   Tier 3 (on demand): core/security-guide.md, core/solid-reference.md,
+#          core/api-patterns.md, core/testing-guide.md — loaded by
+#          pre-write-guard.sh when relevant file patterns detected
 # ─────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
@@ -13,6 +23,11 @@ PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
 MEMORY_DIR="$PLUGIN_ROOT/memory"
 
 CONTEXT_PARTS=()
+
+# ── TIER 1: Always loaded ─────────────────────────────────────────
+# Loaded on every session start. Minimal context for immediate use.
+# Tier 2 (learnings, full insights, briefing) loaded by flow files.
+# Tier 3 (core guides) loaded on demand by pre-write-guard.sh.
 
 # ── Load high-influence user insights ──────────────────────────────
 INSIGHTS_FILE="$MEMORY_DIR/user-insights.yaml"
@@ -71,30 +86,9 @@ $ARCH_SUMMARY")
   fi
 fi
 
-# ── Load recent learnings (if any) ─────────────────────────────────
-LEARNINGS_FILE="$MEMORY_DIR/learnings.yaml"
-if [ -f "$LEARNINGS_FILE" ]; then
-  LEARNINGS_SUMMARY=""
-  if command -v python3 &>/dev/null; then
-    LEARNINGS_SUMMARY=$(python3 -c "
-import yaml, sys
-try:
-    with open('$LEARNINGS_FILE') as f:
-        data = yaml.safe_load(f)
-    if data and 'learnings' in data and data['learnings']:
-        for l in data['learnings'][:5]:  # Last 5
-            ltype = l.get('type', 'unknown')
-            print(f\"- [{ltype}] {l.get('description', 'N/A')}\")
-except Exception:
-    pass
-" 2>/dev/null || true)
-  fi
-
-  if [ -n "$LEARNINGS_SUMMARY" ]; then
-    CONTEXT_PARTS+=("## Recent Learnings
-$LEARNINGS_SUMMARY")
-  fi
-fi
+# ── Learnings: moved to Tier 2 ─────────────────────────────────────
+# learnings.yaml is now loaded by flow files (gravity 2+), not here.
+# See: flows/plan-execute.md, flows/full-cycle.md, flows/shape-first.md
 
 # ── Detect plan mode ──────────────────────────────────────────────
 # If CLAUDE_PERMISSION_MODE is set, detect plan mode for flow optimization.

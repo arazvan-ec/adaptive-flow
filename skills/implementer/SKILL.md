@@ -34,16 +34,162 @@ Para cada task en tasks.md:
 
 ## TodoWrite Integration
 
-Al iniciar, el implementer DEBE crear un TodoWrite con las tareas de tasks.md:
+El implementer DEBE usar TodoWrite para exponer progreso en tiempo real al usuario.
+TodoWrite es la unica forma que tiene el usuario de ver el estado de ejecucion
+mientras el implementer corre como subagente con contexto fresco.
+
+### Paso 1: Parsear tasks.md al iniciar
+
+Al recibir el contexto, el implementer lee tasks.md (o la seccion `## Tasks` de
+plan-and-tasks.md) y extrae cada task con su ID y descripcion. Luego crea un
+TodoWrite con TODAS las tasks como `pending`.
+
+**Ejemplo**: dado un tasks.md con:
+
+```markdown
+- [ ] **T-1**: Crear modelo User con validaciones
+- [ ] **T-2**: Implementar endpoint POST /users
+- [ ] **T-3**: Agregar middleware de autenticacion
+- [ ] **T-4**: Integrar User con servicio de email
+```
+
+El implementer invoca TodoWrite con:
+
+```json
+{
+  "todos": [
+    {
+      "content": "T-1: Crear modelo User con validaciones",
+      "status": "pending",
+      "activeForm": "Creando modelo User con validaciones"
+    },
+    {
+      "content": "T-2: Implementar endpoint POST /users",
+      "status": "pending",
+      "activeForm": "Implementando endpoint POST /users"
+    },
+    {
+      "content": "T-3: Agregar middleware de autenticacion",
+      "status": "pending",
+      "activeForm": "Agregando middleware de autenticacion"
+    },
+    {
+      "content": "T-4: Integrar User con servicio de email",
+      "status": "pending",
+      "activeForm": "Integrando User con servicio de email"
+    }
+  ]
+}
+```
+
+### Paso 2: Marcar progreso en cada ciclo TDD
+
+**Regla clave**: Solo UNA task puede estar `in_progress` a la vez.
+
+Antes de iniciar el ciclo TDD de una task, el implementer actualiza TodoWrite
+marcando esa task como `in_progress`. Al completar el ciclo TDD (test green +
+refactor + commit), la marca como `completed`.
+
+Flujo por task:
 
 ```
-1. Leer tasks.md (o plan-and-tasks.md)
-2. Crear TodoWrite con cada task como item pending
-3. Marcar cada task como in_progress antes de empezar
-4. Marcar cada task como completed al terminar el ciclo TDD
+1. TodoWrite → marcar T-N como in_progress (resto sin cambio)
+2. Escribir test (red)
+3. Implementar codigo (green)
+4. Refactorizar si necesario
+5. Verificar todos los tests pasan
+6. Commit atomico
+7. TodoWrite → marcar T-N como completed
 ```
 
-Esto permite al usuario ver el progreso en tiempo real.
+**Ejemplo**: al iniciar T-2 (con T-1 ya completada):
+
+```json
+{
+  "todos": [
+    {
+      "content": "T-1: Crear modelo User con validaciones",
+      "status": "completed",
+      "activeForm": "Creando modelo User con validaciones"
+    },
+    {
+      "content": "T-2: Implementar endpoint POST /users",
+      "status": "in_progress",
+      "activeForm": "Implementando endpoint POST /users"
+    },
+    {
+      "content": "T-3: Agregar middleware de autenticacion",
+      "status": "pending",
+      "activeForm": "Agregando middleware de autenticacion"
+    },
+    {
+      "content": "T-4: Integrar User con servicio de email",
+      "status": "pending",
+      "activeForm": "Integrando User con servicio de email"
+    }
+  ]
+}
+```
+
+### Paso 3: Manejo de BCP escalation en TodoWrite
+
+Cuando el BCP se activa y los 3 intentos fallan, el implementer NO marca la task
+como `completed`. En su lugar:
+
+1. Mantiene la task actual como `in_progress`
+2. Agrega una nueva task "Resolver escalacion BCP: {task ID}" justo despues
+3. Escala al usuario con el diagnostico completo
+
+**Ejemplo**: BCP escala en T-2:
+
+```json
+{
+  "todos": [
+    {
+      "content": "T-1: Crear modelo User con validaciones",
+      "status": "completed",
+      "activeForm": "Creando modelo User con validaciones"
+    },
+    {
+      "content": "T-2: Implementar endpoint POST /users",
+      "status": "in_progress",
+      "activeForm": "Implementando endpoint POST /users"
+    },
+    {
+      "content": "Resolver escalacion BCP: T-2 (3 intentos fallidos)",
+      "status": "pending",
+      "activeForm": "Resolviendo escalacion BCP para T-2"
+    },
+    {
+      "content": "T-3: Agregar middleware de autenticacion",
+      "status": "pending",
+      "activeForm": "Agregando middleware de autenticacion"
+    },
+    {
+      "content": "T-4: Integrar User con servicio de email",
+      "status": "pending",
+      "activeForm": "Integrando User con servicio de email"
+    }
+  ]
+}
+```
+
+Una vez el usuario resuelve la escalacion, el implementer:
+1. Marca la task BCP como `completed`
+2. Marca la task original (T-2) como `completed` si el fix resolvio el problema
+3. Continua con la siguiente task pendiente
+
+### Notas importantes
+
+- **Siempre enviar la lista completa**: TodoWrite reemplaza la lista entera en
+  cada invocacion. Incluir TODAS las tasks (completed, in_progress y pending)
+  en cada llamada.
+- **activeForm en gerundio**: Usar la forma continua en espanol o ingles segun
+  el idioma del proyecto (ej: "Creando...", "Implementando...", "Creating...").
+- **content con ID de task**: Incluir el ID (T-1, T-2...) para que el usuario
+  pueda correlacionar con tasks.md facilmente.
+- **No omitir tasks completadas**: Las tasks completadas deben seguir en la
+  lista para que el usuario vea el progreso total.
 
 ## BCP (Bounded Correction Protocol)
 

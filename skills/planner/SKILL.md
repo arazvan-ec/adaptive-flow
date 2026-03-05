@@ -1,4 +1,15 @@
-# Worker: Planner
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Task
+  - WebSearch
+  - WebFetch
+---
+
+# Skill: Planner
 
 Subagente de planificacion. Corre con contexto fresco (`context: fork`).
 
@@ -61,7 +72,7 @@ inputs:
       - discovered-insights (status: accepted)
   - learnings: string     # memory/learnings.yaml (si existe)
   - compound_briefing: string  # memory/next-briefing.md (si existe)
-  - existing_specs: list  # Specs existentes en openspec/ (si hay)
+  - existing_specs: list  # Specs existentes en memory/current-task/ (si hay)
   - shaped_brief: string  # Solo en Gravedad 4 (del researcher)
 ```
 
@@ -69,7 +80,7 @@ inputs:
 
 - Historial de conversacion del usuario
 - Codigo fuente completo (solo paths relevantes)
-- Otros workers' output
+- Otros skills' output
 
 ## SOLID Enforcement (modo completo)
 

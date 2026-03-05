@@ -11,22 +11,25 @@ Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de
 
 ## Proceso
 
+> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
+
 ```
-1. Cargar compound data (learnings + briefing anterior si existe)
-2. Cargar insights (planning + design + implementation + review)
+0. Escribir meta.yaml en memory/current-task/ con:
+   name, gravity: 3, flow: "full-cycle", started: fecha actual, status: "in_progress"
+1. Cargar Tier 2: insights completos + learnings + briefing
 
 PLANNING
-3. → Worker: planner (modo completo)
+3. → Skill: planner (modo completo)
    Produce: spec.md, design.md, tasks.md
 4. HITL: "Specs correctas?" → "Diseno correcto?"
 
 IMPLEMENTATION
-5. → Worker: implementer (TDD + BCP)
+5. → Skill: implementer (TDD + BCP)
    Recibe: tasks.md + design.md + insights de implementation
    Produce: codigo + tests
 
 REVIEW
-6. → Worker: reviewer (multi-dimensional)
+6. → Skill: reviewer (multi-dimensional)
    Recibe: diff + spec.md + design.md + insights de review
    Produce: QA report (APPROVED/REJECTED)
 
@@ -36,24 +39,26 @@ REVIEW
 COMPOUND
 8. → Compound capture (skill)
    Extraer: patterns, learnings, discovered insights, briefing
-9. Commit
+9. Actualizar meta.yaml → status: "completed"
+10. Commit
 ```
 
 ## Artefactos
 
-Directorio `openspec/changes/{slug}/`:
+Directorio `memory/current-task/`:
 
 ```
+meta.yaml        # Metadata de la tarea (gravity, flow, status)
 spec.md          # QUE debe hacer el sistema (acceptance criteria)
 design.md        # COMO implementarlo (decisiones SOLID)
 tasks.md         # Lista de tareas ordenada
 retrospective.md # Que fue bien, que mejorar (post-compound)
 ```
 
-## Workers
+## Skills
 
-| Worker | Modo | Contexto |
-|--------|------|----------|
+| Skill | Modo | Contexto |
+|-------|------|----------|
 | planner | completo | Flow + insights (planning, design) + learnings + compound briefing |
 | implementer | TDD+BCP | tasks.md + design.md + insights (implementation) + learnings |
 | reviewer | multi-dim | diff + spec.md + design.md + insights (review) |

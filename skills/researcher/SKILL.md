@@ -1,4 +1,16 @@
-# Worker: Researcher
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+  - Task
+  - WebSearch
+  - WebFetch
+---
+
+# Skill: Researcher
 
 Subagente de investigacion. Corre con contexto fresco (`context: fork`).
 
@@ -53,7 +65,7 @@ inputs:
 
 - Historial de conversacion
 - Insights (el researcher es objetivo, no sesgado por insights)
-- Otros workers' output
+- Otros skills' output
 
 ## Formato del Analysis Report
 

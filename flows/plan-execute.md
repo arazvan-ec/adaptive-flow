@@ -10,21 +10,28 @@ Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren plani
 
 ## Proceso
 
+> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
+
 ```
-1. Cargar insights (planning + implementation)
-2. Cargar memory/learnings.yaml (si existe)
-3. → Worker: planner (modo ligero)
+0. Escribir meta.yaml en memory/current-task/ con:
+   name, gravity: 2, flow: "plan-execute", started: fecha actual, status: "in_progress"
+1. Cargar Tier 2: insights completos + learnings + briefing
+2. → Skill: planner (modo ligero)
    Produce: plan-and-tasks.md (un solo archivo combinado)
-4. HITL: "Este plan captura tu intencion?"
-5. → Worker: implementer (TDD)
+3. HITL: "Este plan captura tu intencion?"
+4. → Skill: implementer (TDD)
    Recibe: plan-and-tasks.md + insights de implementation
-6. Verificar: tests + lint
+5. Verificar: tests + lint
+6. Actualizar meta.yaml → status: "completed"
 7. Commit
 ```
 
 ## Artefactos
 
-Un solo archivo combinado en `openspec/changes/{slug}/plan-and-tasks.md`:
+Directorio `memory/current-task/`:
+
+- `meta.yaml` — Metadata de la tarea (gravity, flow, status)
+- `plan-and-tasks.md` — Plan y tareas combinados
 
 ```markdown
 # {Feature Name}
@@ -43,12 +50,21 @@ Un solo archivo combinado en `openspec/changes/{slug}/plan-and-tasks.md`:
 - Criterion 2
 ```
 
-## Workers
+## Skills
 
-| Worker | Modo | Contexto |
-|--------|------|----------|
+| Skill | Modo | Contexto |
+|-------|------|----------|
 | planner | ligero | Flow + insights de planning + learnings |
 | implementer | standard | plan-and-tasks.md + insights de implementation |
+
+## Plan Mode Integration
+
+Cuando Claude Code esta en **Plan Mode** (permission_mode: plan):
+- El planner skill NO es necesario para gravedad 2 — Claude Code ya planifica nativamente
+- En este caso, el flow se simplifica: el usuario planifica directamente y luego pasa a implementar
+- Si plan mode no esta activo, se usa el planner skill normalmente
+
+Deteccion: `session-init.sh` inyecta `plan_mode: true/false` en el contexto de sesion.
 
 ## HITL Checkpoint
 

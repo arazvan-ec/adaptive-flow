@@ -1,3 +1,14 @@
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+  - Write
+  - Task
+---
+
 # Skill: discover
 
 Analiza el stack del proyecto y genera memoria inicial.
@@ -146,8 +157,3 @@ output:
   profile_path: string            # Path al architecture profile
   next_step: string               # Sugerencia de que hacer despues
 ```
-
-## Integration con plugin.json
-
-Este skill se registra en `.claude-plugin/plugin.json` para ser invocable
-como `/adaptive-flow:discover`.

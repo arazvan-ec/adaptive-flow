@@ -1,3 +1,13 @@
+---
+context: fork
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Edit
+  - Write
+---
+
 # Skill: insights-manager
 
 CRUD de insights del usuario. Permite gestionar el meta-conocimiento

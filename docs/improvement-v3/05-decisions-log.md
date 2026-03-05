@@ -32,3 +32,8 @@
 **Pregunta**: Como testear los 5 hooks bash del plugin (quality gates automaticos).
 **Respuesta**: **bats-core + shellcheck** — tests funcionales que verifican outputs JSON + analisis estatico.
 **Impacto**: Track F usa bats-core como framework. Dependencia de desarrollo (no runtime). Cada hook tendra tests que verifican JSON output con inputs mock. shellcheck como lint obligatorio.
+
+### D5: Analisis de diseno pluggable completo (no solo SOLID)
+**Pregunta**: SOLID es el unico framework de analisis de diseno. ¿Mantener, agregar hints, hacerlo pluggable, o eliminar?
+**Respuesta**: **Pluggable completo** — detectar paradigma y aplicar framework diferente.
+**Impacto**: Track E tarea E3 crece en alcance. Necesita: (1) detectar paradigma del proyecto via discover/architect profile, (2) crear guias core alternativas (ej: core/fp-principles.md, core/component-architecture.md), (3) modificar planner y reviewer para usar el framework detectado, (4) renombrar solid-analyzer a design-analyzer con modo por paradigma. Esfuerzo sube de M a L.

@@ -85,14 +85,14 @@
 ---
 
 ## Fase 6: Tasklist Organizada
-> **Estado**: PENDIENTE | **Entregable**: `06-tasklist.md`
+> **Estado**: COMPLETADA | **Entregable**: `06-tasklist.md` (27 tareas atomicas para v3)
 
 ### Subfases
-- [ ] 6.1 Convertir cada track del plan en tareas atomicas
-- [ ] 6.2 Priorizar: tareas S (small) primero
-- [ ] 6.3 Asignar estado inicial a cada tarea
-- [ ] 6.4 Commit y push de 06-tasklist.md
-- [ ] 6.5 Mantener actualizado con cada avance (commits constantes)
+- [x] 6.1 Convertir Tracks A+B+F en 27 tareas atomicas (F1-F9, A1-A10, B1-B8)
+- [x] 6.2 Priorizar: tareas S primero, luego M
+- [x] 6.3 Asignar estado inicial + archivos afectados por tarea
+- [x] 6.4 Documentar backlog v4 (Tracks C+D+E)
+- [x] 6.5 Commit y push de 06-tasklist.md
 
 ---
 

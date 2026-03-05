@@ -85,23 +85,173 @@
 
 ---
 
-## Fase 6: Tasklist Definitiva
+---
 
-- [ ] 6.1 Convertir cada track en tareas atomicas
-- [ ] 6.2 Priorizar tareas S (small) primero
-- [ ] 6.3 Asignar estado inicial
-- [ ] 6.4 Commit y push de 06-tasklist.md
-- [ ] 6.5 Mantener actualizado con cada avance
+# IMPLEMENTACION v3.0 — Tareas Atomicas
+
+> Alcance v3: Tracks A + B + F (Decision D7)
+> Tracks C + D + E → backlog v4
+> Prioridad: tareas S (small) primero
+
+---
+
+## Track F: Testing y CI/CD (ejecutar primero o en paralelo)
+
+> Objetivo: asegurar que cambios de A y B no rompan nada
+
+- [ ] **F1** [S] Correr shellcheck en los 5 hooks y corregir warnings
+  - Archivos: `hooks/*.sh`
+  - Commit: fix por hook o batch si son pocos
+
+- [ ] **F2** [S] Crear directorio `tests/` con estructura basica
+  - Archivos: `tests/README.md`, estructura de directorios
+
+- [ ] **F3** [M] Crear tests bats para session-init.sh
+  - Archivos: `tests/hooks/session-init.bats`
+  - Mocks: YAML de insights, arch profile, meta.yaml
+
+- [ ] **F4** [M] Crear tests bats para stop-check.sh
+  - Archivos: `tests/hooks/stop-check.bats`
+  - Mocks: meta.yaml con diferentes gravities
+
+- [ ] **F5** [M] Crear tests bats para pre-write-guard.sh y post-write-check.sh
+  - Archivos: `tests/hooks/pre-write-guard.bats`, `tests/hooks/post-write-check.bats`
+  - Mocks: JSON input con file_path
+
+- [ ] **F6** [M] Crear tests bats para post-compact.sh
+  - Archivos: `tests/hooks/post-compact.bats`
+
+- [ ] **F7** [S] Crear script validate-skills.sh
+  - Archivos: `tests/validate-skills.sh`
+  - Verifica: frontmatter, context: fork, allowed-tools
+
+- [ ] **F8** [S] Crear script validate-memory.sh
+  - Archivos: `tests/validate-memory.sh`
+  - Verifica: YAML valido, campos requeridos
+
+- [ ] **F9** [M] Crear GitHub Actions CI
+  - Archivos: `.github/workflows/ci.yml`
+  - Jobs: shellcheck, YAML validation, bats tests, skill validation
+
+---
+
+## Track A: Robustez de Hooks
+
+> Objetivo: hooks confiables, mantenibles, sin bugs silenciosos
+> Dependencia: D1 (jq requerido)
+
+- [ ] **A1** [S] Crear `hooks/lib.sh` con funcion `json_context()`
+  - Archivos: `hooks/lib.sh` (nuevo)
+  - Funcion: recibe string, produce JSON con jq: `jq -n --arg ctx "$1" '{additionalContext: $ctx}'`
+
+- [ ] **A2** [S] Agregar funcion `parse_json_field()` a lib.sh
+  - Archivos: `hooks/lib.sh`
+  - Funcion: extrae campo de JSON stdin con jq
+
+- [ ] **A3** [S] Agregar funcion `parse_yaml_insights()` a lib.sh
+  - Archivos: `hooks/lib.sh`
+  - Funcion: python3+yaml → fallback a grep. Centralizada, no duplicada.
+
+- [ ] **A4** [S] Refactorizar session-init.sh para usar lib.sh
+  - Archivos: `hooks/session-init.sh`
+  - Reemplazar: escape manual → json_context(), parseo duplicado → parse_yaml_insights()
+
+- [ ] **A5** [S] Refactorizar post-compact.sh para usar lib.sh
+  - Archivos: `hooks/post-compact.sh`
+  - Reemplazar: escape manual → json_context(), parseo duplicado → parse_yaml_insights()
+
+- [ ] **A6** [S] Refactorizar pre-write-guard.sh para usar lib.sh
+  - Archivos: `hooks/pre-write-guard.sh`
+  - Reemplazar: grep de file_path → parse_json_field(), escape manual → json_context()
+
+- [ ] **A7** [S] Refactorizar post-write-check.sh para usar lib.sh
+  - Archivos: `hooks/post-write-check.sh`
+  - Reemplazar: grep de file_path → parse_json_field(), escape manual → json_context()
+
+- [ ] **A8** [S] Arreglar stop-check.sh: counter con session awareness
+  - Archivos: `hooks/stop-check.sh`
+  - Cambio: incluir timestamp en counter file para distinguir sesiones
+
+- [ ] **A9** [S] Actualizar README.md con requisito de jq
+  - Archivos: `README.md`
+  - Agregar: jq como requisito en seccion de instalacion
+
+- [ ] **A10** [S] Actualizar plugin.json con requirements
+  - Archivos: `.claude-plugin/plugin.json`
+  - Agregar: campo requirements con jq
+
+---
+
+## Track B: Sistema de Memoria
+
+> Objetivo: memoria funcional con datos reales y cold start
+> Dependencia: D3 (datos reales del plugin)
+
+- [ ] **B1** [M] Extraer learnings reales del desarrollo v1→v2
+  - Archivos: `memory/learnings.yaml`
+  - Fuente: analizar PLAN.md, TASKLIST.md, historial git
+  - Minimo 5 learnings (pattern, anti-pattern, boundary)
+
+- [ ] **B2** [M] Extraer patterns reales del plugin
+  - Archivos: `memory/patterns.yaml`
+  - Fuente: patrones de codigo usados en hooks, skills, flows
+  - Minimo 3 patterns con example_file
+
+- [ ] **B3** [S] Crear directorio memory/briefings/
+  - Archivos: `memory/briefings/.gitkeep`
+
+- [ ] **B4** [S] Modificar compound-capture para guardar historial de briefings
+  - Archivos: `skills/compound-capture/SKILL.md`
+  - Cambio: antes de sobreescribir next-briefing.md, mover anterior a memory/briefings/{date}.md
+
+- [ ] **B5** [S] Marcar insights starter como influence: low por defecto
+  - Archivos: `memory/user-insights.yaml`
+  - Cambio: los 5 insights medium pasan a low. Solo los 3 high se mantienen.
+  - Razon: son genericos, el usuario los valida con el tiempo
+
+- [ ] **B6** [S] Documentar taxonomia de memoria
+  - Archivos: `memory/README.md` (nuevo)
+  - Contenido: que tipo es cada archivo (episodic, semantic, entity), como se usa, decay policy
+
+- [ ] **B7** [S] Limpiar framework-analysis.md obsoleto
+  - Archivos: `memory/framework-analysis.md`
+  - Accion: eliminar o reemplazar con referencia a docs/improvement-v3/01-analysis.md
+
+- [ ] **B8** [S] Verificar closed compound loop
+  - Archivos: `flows/plan-execute.md`, `flows/full-cycle.md`
+  - Verificar: planner y reviewer leen learnings.yaml y patterns.yaml
+  - Si no, agregar instrucciones explicitas
+
+---
+
+## Backlog v4 (no implementar en v3)
+
+> Track C: UX y Onboarding (C1-C5)
+> Track D: Integracion Claude Code (D1-D5)
+> Track E: Contenido y Guias (E1-E5)
 
 ---
 
 ## Resumen de Estado
 
-| Fase | Estado | Entregable | Completitud |
-|------|--------|------------|-------------|
+| Fase planificacion | Estado | Entregable | Completitud |
+|--------------------|--------|------------|-------------|
 | 1. Analisis | `[x] Completada` | 01-analysis.md | 10/10 |
 | 2. Mejoras | `[x] Completada` | 02-improvements.md | 9/9 |
 | 3. Best Practices | `[x] Completada` | 03-best-practices.md | 8/8 |
 | 4. Plan | `[x] Completada` | 04-implementation-plan.md | 10/10 |
 | 5. Validacion | `[x] Completada` | 05-decisions-log.md | 7/7 |
-| 6. Tasklist | `[ ] Pendiente` | 06-tasklist.md | 0/5 |
+| 6. Tasklist | `[x] Completada` | 06-tasklist.md | — |
+
+| Track implementacion | Tareas | Completadas | Estado |
+|---------------------|--------|-------------|--------|
+| F: Testing y CI/CD | 9 | 0 | `[ ] Pendiente` |
+| A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
+| B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
+| **Total v3** | **27** | **0** | **0%** |
+
+| Backlog v4 | Tareas | Estado |
+|-----------|--------|--------|
+| C: UX y Onboarding | 5 | Diferido |
+| D: Integracion Claude Code | 5 | Diferido |
+| E: Contenido y Guias | 5 | Diferido |

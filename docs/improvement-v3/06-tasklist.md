@@ -107,7 +107,7 @@
 - [x] **F2** [S] Crear directorio `tests/` con estructura basica
   - Archivos: `tests/README.md`, estructura de directorios
 
-- [ ] **F3** [M] Crear tests bats para session-init.sh
+- [x] **F3** [M] Crear tests bats para session-init.sh
   - Archivos: `tests/hooks/session-init.bats`
   - Mocks: YAML de insights, arch profile, meta.yaml
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 2 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 3 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **2** | **4%** |
+| **Total v3** | **45** | **3** | **7%** |
 
 ### Notas de coordinacion entre tracks
 

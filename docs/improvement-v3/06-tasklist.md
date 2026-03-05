@@ -119,7 +119,7 @@
   - Archivos: `tests/hooks/pre-write-guard.bats`, `tests/hooks/post-write-check.bats`
   - Mocks: JSON input con file_path
 
-- [ ] **F6** [M] Crear tests bats para post-compact.sh
+- [x] **F6** [M] Crear tests bats para post-compact.sh
   - Archivos: `tests/hooks/post-compact.bats`
 
 - [ ] **F7** [S] Crear script validate-skills.sh
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 5 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 6 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **5** | **11%** |
+| **Total v3** | **45** | **6** | **13%** |
 
 ### Notas de coordinacion entre tracks
 

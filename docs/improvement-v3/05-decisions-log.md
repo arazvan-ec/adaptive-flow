@@ -27,3 +27,8 @@
 **Pregunta**: Como llenar la memoria vacia (learnings, patterns). ¿Datos reales del plugin, ficticios, auto-seed en primer uso, o ambos?
 **Respuesta**: **Datos reales del plugin** — extraer learnings y patterns del desarrollo v1→v2.
 **Impacto**: Track B tarea B1 se enfoca en analizar el historial git y las decisiones tomadas en PLAN.md/TASKLIST.md para extraer learnings concretos (ej: "hooks.json centralizado > hooks individuales", "CLAUDE.md slim mejora routing").
+
+### D4: Testing de hooks con bats-core + shellcheck
+**Pregunta**: Como testear los 5 hooks bash del plugin (quality gates automaticos).
+**Respuesta**: **bats-core + shellcheck** — tests funcionales que verifican outputs JSON + analisis estatico.
+**Impacto**: Track F usa bats-core como framework. Dependencia de desarrollo (no runtime). Cada hook tendra tests que verifican JSON output con inputs mock. shellcheck como lint obligatorio.

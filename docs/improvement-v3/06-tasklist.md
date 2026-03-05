@@ -104,7 +104,7 @@
   - Archivos: `hooks/*.sh`
   - Commit: fix por hook o batch si son pocos
 
-- [ ] **F2** [S] Crear directorio `tests/` con estructura basica
+- [x] **F2** [S] Crear directorio `tests/` con estructura basica
   - Archivos: `tests/README.md`, estructura de directorios
 
 - [ ] **F3** [M] Crear tests bats para session-init.sh
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 1 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 2 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **1** | **2%** |
+| **Total v3** | **45** | **2** | **4%** |
 
 ### Notas de coordinacion entre tracks
 

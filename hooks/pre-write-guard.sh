@@ -20,8 +20,6 @@
 
 set -euo pipefail
 
-PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
-
 # Read stdin (tool input JSON)
 INPUT=$(cat)
 
@@ -34,7 +32,6 @@ if [ -z "$FILE_PATH" ]; then
 fi
 
 FILENAME=$(basename "$FILE_PATH")
-DIRPATH=$(dirname "$FILE_PATH")
 
 # ── Check for sensitive files ──────────────────────────────────────
 SENSITIVE_PATTERNS=('.env' 'credentials' 'secret' '.key' '.pem' 'token' 'password')

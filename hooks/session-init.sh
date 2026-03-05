@@ -93,9 +93,7 @@ fi
 # ── Detect plan mode ──────────────────────────────────────────────
 # If CLAUDE_PERMISSION_MODE is set, detect plan mode for flow optimization.
 # When plan mode is active + gravity 2, the planner skill is redundant.
-PLAN_MODE="false"
 if [ "${CLAUDE_PERMISSION_MODE:-}" = "plan" ]; then
-  PLAN_MODE="true"
   CONTEXT_PARTS+=("## Session Mode
 - plan_mode: true (planner skill redundant for gravity 2 tasks)")
 fi

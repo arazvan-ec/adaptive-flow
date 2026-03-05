@@ -100,7 +100,7 @@
 
 > Objetivo: asegurar que cambios de A y B no rompan nada
 
-- [ ] **F1** [S] Correr shellcheck en los 5 hooks y corregir warnings
+- [x] **F1** [S] Correr shellcheck en los 5 hooks y corregir warnings
   - Archivos: `hooks/*.sh`
   - Commit: fix por hook o batch si son pocos
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 0 | `[ ] Pendiente` |
+| F: Testing y CI/CD | 9 | 1 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **0** | **0%** |
+| **Total v3** | **45** | **1** | **2%** |
 
 ### Notas de coordinacion entre tracks
 

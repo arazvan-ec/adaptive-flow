@@ -12,9 +12,6 @@
 
 set -euo pipefail
 
-PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
-TASK_DIR="$PLUGIN_ROOT/memory/current-task"
-
 # Read stdin (tool output JSON)
 INPUT=$(cat)
 

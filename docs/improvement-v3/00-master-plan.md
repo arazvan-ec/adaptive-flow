@@ -71,15 +71,16 @@
 ---
 
 ## Fase 5: Cuestionamiento y Validacion con el Usuario
-> **Estado**: PENDIENTE | **Entregable**: `05-decisions-log.md` + actualizacion de `04-implementation-plan.md`
+> **Estado**: COMPLETADA | **Entregable**: `05-decisions-log.md` (7 decisiones)
 
 ### Subfases
-- [ ] 5.1 Identificar supuestos criticos del plan
-- [ ] 5.2 Formular duda 1 → esperar respuesta → actualizar plan → commit y push
-- [ ] 5.3 Formular duda 2 → esperar respuesta → actualizar plan → commit y push
-- [ ] 5.4 Formular duda 3 → esperar respuesta → actualizar plan → commit y push
-- [ ] 5.N (tantas como sean necesarias, una por una)
-- [ ] 5.X Commit y push final de 05-decisions-log.md
+- [x] 5.1 D1: Requerir jq como dependencia para hooks
+- [x] 5.2 D2: Agent Teams solo evaluacion en v3
+- [x] 5.3 D3: Cold start con datos reales del plugin
+- [x] 5.4 D4: bats-core + shellcheck para testing
+- [x] 5.5 D5: Analisis de diseno pluggable completo
+- [x] 5.6 D6: Review multi-perspectiva configurable por gravedad
+- [x] 5.7 D7: Alcance v3 = Tracks A+B+F (fundacion), C+D+E para v4
 
 ---
 

@@ -5,12 +5,6 @@
 
 ---
 
-## Decisiones Pendientes
-
-(Se iran resolviendo una por una)
-
----
-
 ## Decisiones Tomadas
 
 ### D1: Dependencia de jq para hooks
@@ -42,3 +36,14 @@
 **Pregunta**: Cuantas perspectivas de review paralelo. EveryInc usa 12 (costoso).
 **Respuesta**: **Configurable por gravedad** — G3: 4 perspectivas basicas (correctness, design compliance, code quality, security). G4: 6 perspectivas (+performance, +over-engineering).
 **Impacto**: Track D tarea D5 se implementa con configuracion por gravedad. El reviewer skill recibe un parametro de perspectivas segun gravity de meta.yaml. Cada perspectiva es un subagente paralelo que produce un sub-report, luego se sintetizan en un QA report unificado.
+
+### D7: Alcance de v3 — Tracks A+B+F primero
+**Pregunta**: Implementar las 31 tareas en v3 o seleccionar subset.
+**Respuesta**: **Tracks A+B+F primero** (robustez hooks + memoria funcional + testing). Tracks C+D+E quedan para v4.
+**Impacto**: v3 se enfoca en 16 tareas (A:6 + B:5 + F:5). Fundacion solida antes de features nuevas. Tracks C (UX), D (Claude Code integracion), E (contenido) se documentan como backlog v4 en el tasklist.
+
+---
+
+## Decisiones Pendientes
+
+(Ninguna — todas las dudas criticas resueltas)

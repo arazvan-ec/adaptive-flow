@@ -73,9 +73,15 @@
 
 ## Fase 5: Cuestionamiento y Validacion
 
-- [ ] 5.1 Identificar supuestos criticos del plan
-- [ ] 5.2+ Resolver dudas una por una (commit y push tras cada una)
-- [ ] 5.X Commit y push final de 05-decisions-log.md
+- [x] 5.1 D1: Requerir jq como dependencia para hooks
+- [x] 5.2 D2: Agent Teams solo evaluacion en v3
+- [x] 5.3 D3: Cold start con datos reales del plugin
+- [x] 5.4 D4: bats-core + shellcheck para testing
+- [x] 5.5 D5: Analisis de diseno pluggable completo
+- [x] 5.6 D6: Review multi-perspectiva configurable por gravedad
+- [x] 5.7 D7: Alcance v3 = Tracks A+B+F, resto para v4
+
+**Resultado**: `docs/improvement-v3/05-decisions-log.md` — 7 decisiones tomadas
 
 ---
 
@@ -97,5 +103,5 @@
 | 2. Mejoras | `[x] Completada` | 02-improvements.md | 9/9 |
 | 3. Best Practices | `[x] Completada` | 03-best-practices.md | 8/8 |
 | 4. Plan | `[x] Completada` | 04-implementation-plan.md | 10/10 |
-| 5. Validacion | `[ ] Pendiente` | 05-decisions-log.md | 0/? |
+| 5. Validacion | `[x] Completada` | 05-decisions-log.md | 7/7 |
 | 6. Tasklist | `[ ] Pendiente` | 06-tasklist.md | 0/5 |

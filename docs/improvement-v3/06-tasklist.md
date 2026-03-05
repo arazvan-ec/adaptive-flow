@@ -115,7 +115,7 @@
   - Archivos: `tests/hooks/stop-check.bats`
   - Mocks: meta.yaml con diferentes gravities
 
-- [ ] **F5** [M] Crear tests bats para pre-write-guard.sh y post-write-check.sh
+- [x] **F5** [M] Crear tests bats para pre-write-guard.sh y post-write-check.sh
   - Archivos: `tests/hooks/pre-write-guard.bats`, `tests/hooks/post-write-check.bats`
   - Mocks: JSON input con file_path
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 4 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 5 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **4** | **9%** |
+| **Total v3** | **45** | **5** | **11%** |
 
 ### Notas de coordinacion entre tracks
 

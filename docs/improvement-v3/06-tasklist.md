@@ -122,7 +122,7 @@
 - [x] **F6** [M] Crear tests bats para post-compact.sh
   - Archivos: `tests/hooks/post-compact.bats`
 
-- [ ] **F7** [S] Crear script validate-skills.sh
+- [x] **F7** [S] Crear script validate-skills.sh
   - Archivos: `tests/validate-skills.sh`
   - Verifica: frontmatter, context: fork, allowed-tools
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 6 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 7 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **6** | **13%** |
+| **Total v3** | **45** | **7** | **16%** |
 
 ### Notas de coordinacion entre tracks
 

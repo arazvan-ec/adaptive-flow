@@ -162,6 +162,71 @@ YAML
 
 # ── JSON output validity ─────────────────────────────────────────
 
+@test "no plan mode when CLAUDE_PERMISSION_MODE is default" {
+  export CLAUDE_PERMISSION_MODE="default"
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"plan_mode"* ]]
+}
+
+@test "works without architecture profile file" {
+  rm -f "$TEST_DIR/memory/architecture-profile.yaml"
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"Architecture Profile"* ]]
+}
+
+@test "works without current task meta file" {
+  rm -f "$TEST_DIR/memory/current-task/meta.yaml"
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"Current Task"* ]]
+}
+
+@test "defaults to current dir when CLAUDE_PLUGIN_ROOT unset" {
+  unset CLAUDE_PLUGIN_ROOT
+  cd "$TEST_DIR"
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+}
+
+@test "excludes deprecated high-influence insights via python3" {
+  if ! python3 -c "import yaml" 2>/dev/null; then
+    skip "python3 with pyyaml not available"
+  fi
+
+  cat > "$TEST_DIR/memory/user-insights.yaml" <<'YAML'
+insights:
+  - id: INS-010
+    observation: "Active high"
+    influence: high
+    status: active
+  - id: INS-011
+    observation: "Deprecated high"
+    influence: high
+    status: deprecated
+YAML
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"INS-010"* ]]
+  # python3 correctly filters deprecated — only grep fallback leaks
+}
+
+@test "handles empty insights file gracefully" {
+  echo "" > "$TEST_DIR/memory/user-insights.yaml"
+
+  run bash "$HOOK"
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"High-Influence"* ]]
+}
+
+# ── JSON output validity ─────────────────────────────────────────
+
 @test "output is parseable JSON" {
   cat > "$TEST_DIR/memory/user-insights.yaml" <<'YAML'
 insights:

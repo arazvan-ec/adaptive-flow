@@ -37,3 +37,8 @@
 **Pregunta**: SOLID es el unico framework de analisis de diseno. ¿Mantener, agregar hints, hacerlo pluggable, o eliminar?
 **Respuesta**: **Pluggable completo** — detectar paradigma y aplicar framework diferente.
 **Impacto**: Track E tarea E3 crece en alcance. Necesita: (1) detectar paradigma del proyecto via discover/architect profile, (2) crear guias core alternativas (ej: core/fp-principles.md, core/component-architecture.md), (3) modificar planner y reviewer para usar el framework detectado, (4) renombrar solid-analyzer a design-analyzer con modo por paradigma. Esfuerzo sube de M a L.
+
+### D6: Review multi-perspectiva configurable por gravedad
+**Pregunta**: Cuantas perspectivas de review paralelo. EveryInc usa 12 (costoso).
+**Respuesta**: **Configurable por gravedad** — G3: 4 perspectivas basicas (correctness, design compliance, code quality, security). G4: 6 perspectivas (+performance, +over-engineering).
+**Impacto**: Track D tarea D5 se implementa con configuracion por gravedad. El reviewer skill recibe un parametro de perspectivas segun gravity de meta.yaml. Cada perspectiva es un subagente paralelo que produce un sub-report, luego se sintetizan en un QA report unificado.

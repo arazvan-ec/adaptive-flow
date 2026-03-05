@@ -79,7 +79,7 @@
 - [x] 5.4 D4: bats-core + shellcheck para testing
 - [x] 5.5 D5: Analisis de diseno pluggable completo
 - [x] 5.6 D6: Review multi-perspectiva configurable por gravedad
-- [x] 5.7 D7: Alcance v3 = Tracks A+B+F, resto para v4
+- [x] 5.7 D7: Alcance v3 = 6 tracks completos, validar entre tracks
 
 **Resultado**: `docs/improvement-v3/05-decisions-log.md` — 7 decisiones tomadas
 
@@ -89,9 +89,10 @@
 
 # IMPLEMENTACION v3.0 — Tareas Atomicas
 
-> Alcance v3: Tracks A + B + F (Decision D7)
-> Tracks C + D + E → backlog v4
-> Prioridad: tareas S (small) primero
+> Alcance v3: 6 Tracks completos (A + B + C + D + E + F)
+> Orden recomendado: F primero → A + B + C + E en paralelo → D al final
+> Antes de pasar de un track al siguiente, validar con el usuario
+> Prioridad dentro de cada track: tareas S (small) primero
 
 ---
 
@@ -224,11 +225,116 @@
 
 ---
 
-## Backlog v4 (no implementar en v3)
+## Track C: UX y Onboarding
 
-> Track C: UX y Onboarding (C1-C5)
-> Track D: Integracion Claude Code (D1-D5)
-> Track E: Contenido y Guias (E1-E5)
+> Objetivo: mejorar experiencia de usuario y descubribilidad del plugin
+> Dependencia: ninguna (independiente)
+
+- [ ] **C1** [S] Agregar feedback visible del routing en CLAUDE.md
+  - Archivos: `CLAUDE.md`
+  - Cambio: agregar instruccion "Al clasificar, comunicar al usuario: Gravedad N porque X"
+  - Una linea antes de ejecutar el flow
+
+- [ ] **C2** [S] Agregar instruccion de feedback en cada flow
+  - Archivos: `flows/direct.md`, `flows/plan-execute.md`, `flows/full-cycle.md`, `flows/shape-first.md`
+  - Cambio: primera linea de cada flow confirma gravedad asignada
+
+- [ ] **C3** [S] Crear seccion de troubleshooting en README
+  - Archivos: `README.md`
+  - Contenido: requisitos (python3+yaml, jq), como verificar activacion, errores comunes
+
+- [ ] **C4** [S] Enriquecer plugin.json con metadatos
+  - Archivos: `.claude-plugin/plugin.json`
+  - Agregar: author, license, requirements, claude_code_version_min
+  - Nota: coordinar con A10 si se ejecuta Track A primero
+
+- [ ] **C5** [M] Crear skill de diagnostico / dry-run
+  - Archivos: `skills/diagnostics/SKILL.md` (nuevo)
+  - Funcion: `/adaptive-flow:diagnostics` muestra gravedad estimada, flow, insights aplicables, estado memoria
+  - Util para debug y verificacion sin ejecutar el flow
+
+- [ ] **C6** [S] Agregar --help a skills invocables
+  - Archivos: `skills/compound-capture/SKILL.md`, `skills/insights-manager/SKILL.md`, `skills/discover/SKILL.md`, `skills/solid-analyzer/SKILL.md`
+  - Cambio: primer parrafo de cada SKILL.md sirve como help inline
+
+---
+
+## Track D: Integracion con Claude Code Moderno
+
+> Objetivo: aprovechar features nuevas de Claude Code (2026)
+> Dependencia: parcial de Track A (hooks refactorizados facilitan nuevos hooks)
+
+- [ ] **D1** [S] Usar CLAUDE_ENV_FILE para persistir estado de sesion
+  - Archivos: `hooks/session-init.sh`
+  - Cambio: escribir gravity, flow activo, task name en CLAUDE_ENV_FILE
+  - Reemplaza archivos temporales para estado de sesion
+
+- [ ] **D2** [M] Agregar hook SubagentStart para inyectar contexto
+  - Archivos: `hooks/hooks.json`, `hooks/subagent-start.sh` (nuevo)
+  - Funcion: inyectar insights y task meta relevantes a subagentes
+  - Evento: SubagentStart
+
+- [ ] **D3** [M] Agregar hooks PostToolUseFailure y TaskCompleted
+  - Archivos: `hooks/hooks.json`, `hooks/tool-failure.sh` (nuevo), `hooks/task-completed.sh` (nuevo)
+  - PostToolUseFailure: logging de fallos, sugerencias de recovery
+  - TaskCompleted: trigger para actualizar estado del task
+
+- [ ] **D4** [M] Evaluar Prompt hooks para pre-write-guard
+  - Archivos: `hooks/pre-write-guard.sh` o nuevo prompt hook
+  - Evaluacion: comparar pattern matching actual vs evaluacion semantica
+  - Entregable: documento de decision con pros/cons y recomendacion
+
+- [ ] **D5** [M] Evaluar y documentar viabilidad de Agent Teams para G3+
+  - Archivos: `docs/improvement-v3/agent-teams-evaluation.md` (nuevo)
+  - Evaluar: planner + implementer + reviewer como teammates vs subagentes
+  - Documentar: coste (5-7x tokens), beneficios, cuando tiene sentido
+  - Decision D2: solo evaluacion, no implementacion en v3
+
+- [ ] **D6** [L] Implementar review multi-perspectiva configurable
+  - Archivos: `skills/reviewer/SKILL.md`
+  - G3: 4 perspectivas (correctness, design, quality, security)
+  - G4: 6 perspectivas (+performance, +over-engineering)
+  - Cada perspectiva es subagente paralelo, resultados sintetizados en QA report
+  - Decision D6: configurable por gravedad
+
+---
+
+## Track E: Contenido y Guias
+
+> Objetivo: hacer el contenido adaptativo y mas util
+> Dependencia: ninguna (independiente)
+
+- [ ] **E1** [S] Completar guide triggers P2-3 en pre-write-guard
+  - Archivos: `hooks/pre-write-guard.sh`
+  - Completar detecciones: auth/security patterns, controller/route/api, test files
+  - Verificar que additionalContext se inyecta correctamente
+
+- [ ] **E2** [S] Limpiar framework-analysis.md obsoleto
+  - Archivos: `memory/framework-analysis.md`
+  - Accion: eliminar contenido obsoleto, reemplazar con referencia a docs/improvement-v3/01-analysis.md
+  - Nota: coordinar con B7 si se ejecuta Track B primero (misma tarea)
+
+- [ ] **E3** [M] Renombrar solid-analyzer a design-analyzer con modo pluggable
+  - Archivos: `skills/solid-analyzer/SKILL.md` → `skills/design-analyzer/SKILL.md`
+  - Mantener SOLID como default para OOP
+  - Agregar: composicion (FP), bounded contexts (microservices), component architecture (frontend)
+  - El analyzer detecta paradigma via discover/architect profile y aplica framework correcto
+  - Decision D5: pluggable completo
+
+- [ ] **E4** [S] Crear guias core alternativas para paradigmas no-OOP
+  - Archivos: `core/fp-principles.md` (nuevo), `core/component-architecture.md` (nuevo)
+  - Contenido: principios equivalentes a SOLID para FP y frontend
+  - Referenciados por design-analyzer segun paradigma detectado
+
+- [ ] **E5** [S] Hacer templates adaptativos por tipo de proyecto
+  - Archivos: `templates/spec.md`, `templates/design.md`, `templates/tasks.md`, `templates/retrospective.md`
+  - Agregar secciones condicionales: "Si frontend, incluir...", "Si API, incluir..."
+
+- [ ] **E6** [S] Verificar closed compound loop
+  - Archivos: `flows/plan-execute.md`, `flows/full-cycle.md`
+  - Verificar: planner y reviewer leen learnings.yaml y patterns.yaml
+  - Si no, agregar instrucciones explicitas de lectura
+  - Nota: coordinar con B8 si se ejecuta Track B primero (misma verificacion)
 
 ---
 
@@ -248,10 +354,14 @@
 | F: Testing y CI/CD | 9 | 0 | `[ ] Pendiente` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
-| **Total v3** | **27** | **0** | **0%** |
+| C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
+| D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
+| E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
+| **Total v3** | **45** | **0** | **0%** |
 
-| Backlog v4 | Tareas | Estado |
-|-----------|--------|--------|
-| C: UX y Onboarding | 5 | Diferido |
-| D: Integracion Claude Code | 5 | Diferido |
-| E: Contenido y Guias | 5 | Diferido |
+### Notas de coordinacion entre tracks
+
+- **B7 y E2** son la misma accion (limpiar framework-analysis.md) — ejecutar solo una vez
+- **B8 y E6** son la misma verificacion (closed compound loop) — ejecutar solo una vez
+- **A10 y C4** ambos tocan plugin.json — coordinar cambios
+- **Track D** depende parcialmente de Track A (hooks refactorizados facilitan nuevos hooks)

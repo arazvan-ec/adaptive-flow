@@ -111,7 +111,7 @@
   - Archivos: `tests/hooks/session-init.bats`
   - Mocks: YAML de insights, arch profile, meta.yaml
 
-- [ ] **F4** [M] Crear tests bats para stop-check.sh
+- [x] **F4** [M] Crear tests bats para stop-check.sh
   - Archivos: `tests/hooks/stop-check.bats`
   - Mocks: meta.yaml con diferentes gravities
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 3 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 4 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **3** | **7%** |
+| **Total v3** | **45** | **4** | **9%** |
 
 ### Notas de coordinacion entre tracks
 

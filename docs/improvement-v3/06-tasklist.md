@@ -126,7 +126,7 @@
   - Archivos: `tests/validate-skills.sh`
   - Verifica: frontmatter, context: fork, allowed-tools
 
-- [ ] **F8** [S] Crear script validate-memory.sh
+- [x] **F8** [S] Crear script validate-memory.sh
   - Archivos: `tests/validate-memory.sh`
   - Verifica: YAML valido, campos requeridos
 
@@ -351,13 +351,13 @@
 
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
-| F: Testing y CI/CD | 9 | 7 | `[~] En progreso` |
+| F: Testing y CI/CD | 9 | 8 | `[~] En progreso` |
 | A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
 | B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
 | C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
 | D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
 | E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **45** | **7** | **16%** |
+| **Total v3** | **45** | **8** | **18%** |
 
 ### Notas de coordinacion entre tracks
 

@@ -9,6 +9,8 @@ allowed-tools:
 
 # Skill: diagnostics
 
+> **Help**: Dry-run diagnostic. Shows memory state, estimated gravity, applicable insights, and health checks. Usage: `/adaptive-flow:diagnostics [task description]`
+
 Dry-run diagnostic tool. Shows estimated gravity, applicable flow, active insights, and memory state without executing any flow.
 
 ## Invocation

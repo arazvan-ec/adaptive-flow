@@ -76,6 +76,32 @@ for SKILL_FILE in "$SKILLS_DIR"/*/SKILL.md; do
     echo "ERROR [$SKILL_NAME]: Missing skill title (# Skill: ...)"
     ERRORS=$((ERRORS + 1))
   fi
+
+  # ── Check invocable skills have Help block ──────────────────
+  # Invocable skills (user-facing) should have a > **Help**: line
+  if grep -qi '## Invocacion\|## Invocation' "$SKILL_FILE"; then
+    if ! grep -q '> \*\*Help\*\*:' "$SKILL_FILE"; then
+      echo "WARNING [$SKILL_NAME]: Invocable skill missing inline help (> **Help**: ...)"
+    fi
+  fi
+
+  # ── Check worker skills have inputs/outputs ─────────────────
+  # Worker skills (planner, implementer, reviewer, researcher) should
+  # document what context they receive and what they produce
+  if grep -qi '## Contexto que recibe\|## Context.*recei\|## Inputs' "$SKILL_FILE"; then
+    # Has inputs section — check for outputs too
+    if ! grep -qi '## Output\|## Formato del\|## Resultado' "$SKILL_FILE"; then
+      echo "WARNING [$SKILL_NAME]: Has inputs section but missing outputs/format section"
+    fi
+  fi
+
+  # ── Check output schema for skills with output section ──────
+  # Skills that document output should use a structured format
+  if grep -qi '^## Output' "$SKILL_FILE"; then
+    if ! grep -q '```yaml\|```json\|```markdown' "$SKILL_FILE"; then
+      echo "WARNING [$SKILL_NAME]: Output section exists but lacks structured format (yaml/json/markdown block)"
+    fi
+  fi
 done
 
 # ── Summary ─────────────────────────────────────────────────────

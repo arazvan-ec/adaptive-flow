@@ -10,7 +10,7 @@ allowed-tools:
 
 # Skill: insights-manager
 
-> **Help**: Manage your AI working insights. Add, review, pause, retire, or promote insights. Usage: `/adaptive-flow:insights-manager [--add|--review|--pause ID|--retire ID|--promote ID]`
+> **Help**: Manage your AI working insights. Add, review, search, pause, retire, or promote insights. Usage: `/adaptive-flow:insights-manager [--add|--review|--list|--search|--pause ID|--retire ID|--promote ID]`
 
 CRUD de insights del usuario. Permite gestionar el meta-conocimiento
 sobre como trabajar con IA de forma efectiva.
@@ -18,12 +18,15 @@ sobre como trabajar con IA de forma efectiva.
 ## Invocacion
 
 ```
-/adaptive-flow:insights-manager                  # Listar insights activos
-/adaptive-flow:insights-manager --add            # Anadir nuevo insight
-/adaptive-flow:insights-manager --review         # Revisar discovered insights pendientes
-/adaptive-flow:insights-manager --pause {id}     # Pausar un insight
-/adaptive-flow:insights-manager --retire {id}    # Retirar un insight
-/adaptive-flow:insights-manager --promote {id}   # Promover discovered → user
+/adaptive-flow:insights-manager                                  # Listar insights activos
+/adaptive-flow:insights-manager --add                            # Anadir nuevo insight
+/adaptive-flow:insights-manager --review                         # Revisar discovered insights pendientes
+/adaptive-flow:insights-manager --pause {id}                     # Pausar un insight
+/adaptive-flow:insights-manager --retire {id}                    # Retirar un insight
+/adaptive-flow:insights-manager --promote {id}                   # Promover discovered → user
+/adaptive-flow:insights-manager --list --tag={tag}               # Filtrar insights por tag
+/adaptive-flow:insights-manager --list --influence={high|medium|low}  # Filtrar por influencia
+/adaptive-flow:insights-manager --search {query}                 # Buscar en insights, learnings y patterns
 ```
 
 ## Operaciones
@@ -115,6 +118,61 @@ Mapping de confidence a influence:
 - confidence >= 0.8 → influence: high
 - confidence >= 0.6 → influence: medium
 - confidence < 0.6 → influence: low
+
+### list --tag={tag} / --influence={level}
+
+Filtra insights activos por criterios:
+
+```
+--tag={tag}:        Solo muestra insights que tengan ese tag
+--influence={level}: Solo muestra insights con ese nivel de influencia (high, medium, low)
+--since={date}:     Solo muestra insights añadidos desde esa fecha (YYYY-MM-DD)
+
+Se pueden combinar:
+  --list --tag=testing --influence=high
+```
+
+Output: misma tabla que `list` pero filtrada.
+
+### search {query}
+
+Busca texto en TODA la memoria del plugin:
+
+```
+1. Buscar en memory/user-insights.yaml (observation, reasoning, tags)
+2. Buscar en memory/learnings.yaml (description, context, tags)
+3. Buscar en memory/patterns.yaml (name, description, tags)
+4. Buscar en memory/discovered-insights.yaml (observation, evidence)
+```
+
+Output:
+
+```markdown
+# Search Results for "{query}"
+
+## Insights ({N} matches)
+- `{id}` [{influence}]: {observation}
+
+## Learnings ({N} matches)
+- `{id}` [{type}]: {description}
+
+## Patterns ({N} matches)
+- `{id}`: {name} — {description}
+
+## Discovered Insights ({N} matches)
+- `{id}` [{status}]: {observation}
+
+Total: {N} results across {N} memory files
+```
+
+La busqueda es case-insensitive y busca en todos los campos de texto.
+
+## Archivos que lee
+
+- `memory/user-insights.yaml` — list, search
+- `memory/learnings.yaml` — search
+- `memory/patterns.yaml` — search
+- `memory/discovered-insights.yaml` — review, search
 
 ## Archivos que modifica
 

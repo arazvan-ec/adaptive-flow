@@ -363,3 +363,50 @@
 - **B8 y E6** son la misma verificacion (closed compound loop) — ejecutar solo una vez
 - **A10 y C4** ambos tocan plugin.json — coordinar cambios
 - **Track D** depende parcialmente de Track A (hooks refactorizados facilitan nuevos hooks)
+
+---
+---
+
+# MEJORAS POST-v3 — Identificadas pero fuera del scope original
+
+> Origen: 02-improvements.md (28 mejoras identificadas, v3 cubrio las prioritarias)
+> Orden recomendado: G1 → G2 → G3 → G4 → G5
+
+---
+
+## Track G: Hardening y Extensiones
+
+> Objetivo: mejoras de alto valor no cubiertas en v3
+> Prioridad: por ratio impacto/esfuerzo
+
+- [x] **G1** [S] Hook Bash guard para comandos peligrosos
+  - Archivos: `hooks/bash-guard.sh` (nuevo), `hooks/hooks.json`
+  - Interceptar: `rm -rf`, `DROP TABLE`, `git push --force`, `chmod 777`
+  - Evento: PreToolUse(Bash)
+
+- [x] **G2** [M] Búsqueda y filtrado en memoria
+  - Archivos: `skills/insights-manager/SKILL.md`
+  - Agregar: `--list --tag=X`, `--list --influence=high`, `--list --since=2026-01`
+  - Aplicar también a learnings y patterns
+
+- [x] **G3** [M] Schema validación para skills (inputs/outputs)
+  - Archivos: `tests/validate-skills.sh` (extender), esquema JSON
+  - Verificar: inputs/outputs documentados en cada SKILL.md coinciden con uso real
+
+- [x] **G4** [L] MCP server para memoria
+  - Archivos: `mcp/` (nuevo directorio), server en Python o Node
+  - Exponer: insights, learnings, patterns como queries estructuradas
+  - Permitir: búsqueda semántica, filtrado, estadísticas
+
+- [x] **G5** [M] Guías core adaptativas al stack detectado
+  - Archivos: `core/*.md`, `skills/discover/SKILL.md`
+  - `discover --seed` genera secciones stack-specific en las guías
+  - Ej: security-guide.md con ejemplos Express vs Django vs Go
+
+---
+
+## Resumen Post-v3
+
+| Track | Tareas | Completadas | Estado |
+|-------|--------|-------------|--------|
+| G: Hardening | 5 | 5 | `[x] Completada` |

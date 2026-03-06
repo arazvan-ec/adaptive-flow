@@ -32,6 +32,20 @@
 - {Modulos/servicios de los que depende}
 - {APIs externas si las hay}
 
+<!-- If frontend project: -->
+## UI/UX Considerations
+
+- {User-facing behavior changes}
+- {Responsive/accessibility requirements}
+- {State management impact}
+
+<!-- If API project: -->
+## API Contract
+
+- {New/modified endpoints}
+- {Request/response format}
+- {Breaking changes (if any)}
+
 ## Insights Applied
 
 - `{insight-id}`: {como influyo en la spec}

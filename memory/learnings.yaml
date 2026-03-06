@@ -23,4 +23,69 @@
 # informacion de contexto.
 # ─────────────────────────────────────────────────────────────────────
 
-learnings: []
+learnings:
+
+  # ── Extracted from v1→v2→v3 development ──
+
+  - id: hooks-need-shared-lib
+    type: pattern
+    description: "Shell hooks that share logic (JSON escaping, YAML parsing) should use a shared lib.sh to avoid duplicated, fragile code"
+    context: "v2 hooks had copy-pasted sed/tr escaping logic in 3 files; v3 centralized into hooks/lib.sh"
+    impact: high
+    tags: [hooks, maintainability, DRY]
+    source_feature: v3-track-a-hooks
+    captured: 2026-03-06
+
+  - id: manual-json-escaping-fragile
+    type: anti-pattern
+    description: "Manual JSON escaping with sed/tr chains breaks on edge cases (newlines, special chars). Use jq for reliable JSON generation"
+    context: "v2 hooks used sed + tr pipeline that failed on multi-line context strings"
+    impact: high
+    tags: [hooks, reliability, json]
+    source_feature: v2-hooks-implementation
+    captured: 2026-03-06
+
+  - id: tiered-memory-loading
+    type: pattern
+    description: "Loading all memory at session start wastes context tokens. Three-tier loading (always/per-flow/on-demand) keeps context minimal"
+    context: "v1 loaded everything in session-init; v2 introduced tiers; reduced session-init output by ~60%"
+    impact: high
+    tags: [memory, context-engineering, performance]
+    source_feature: v2-memory-tiers
+    captured: 2026-03-06
+
+  - id: counter-file-session-unaware
+    type: anti-pattern
+    description: "Stop-check counter file without session ID persists across sessions, causing stale block counts"
+    context: "stop-check.sh block counter from a previous session could prevent stopping in a new session"
+    impact: medium
+    tags: [hooks, state-management]
+    source_feature: v2-stop-check
+    captured: 2026-03-06
+
+  - id: gravity-routing-proportional-process
+    type: pattern
+    description: "Process weight proportional to task complexity (gravity 1-4) prevents over-engineering simple tasks and under-engineering complex ones"
+    context: "Core design principle; validated across v1→v2 development where gravity-based routing saved significant time on simple tasks"
+    impact: high
+    tags: [architecture, routing, efficiency]
+    source_feature: v1-initial-design
+    captured: 2026-03-06
+
+  - id: skills-need-frontmatter-validation
+    type: boundary
+    description: "Skills without proper frontmatter (context: fork, allowed-tools) silently misbehave. Validation script catches this early"
+    context: "During v2 migration from workers/ to skills/, missing frontmatter caused skills to run without fork context"
+    impact: medium
+    tags: [skills, validation, testing]
+    source_feature: v2-skills-migration
+    captured: 2026-03-06
+
+  - id: testing-before-refactoring
+    type: pattern
+    description: "Writing bats tests for hooks BEFORE refactoring them (Track F before Track A) caught regressions early"
+    context: "v3 plan explicitly ordered Track F first; tests provided safety net for lib.sh migration"
+    impact: high
+    tags: [testing, workflow, planning]
+    source_feature: v3-track-f-testing
+    captured: 2026-03-06

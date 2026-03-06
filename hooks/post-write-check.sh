@@ -13,13 +13,14 @@
 set -euo pipefail
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
-TASK_DIR="$PLUGIN_ROOT/memory/current-task"
+# shellcheck source=lib.sh
+source "$PLUGIN_ROOT/hooks/lib.sh"
 
 # Read stdin (tool output JSON)
 INPUT=$(cat)
 
 # Extract file_path from the JSON
-FILE_PATH=$(echo "$INPUT" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' || true)
+FILE_PATH=$(printf '%s' "$INPUT" | parse_json_field "file_path")
 
 if [ -z "$FILE_PATH" ]; then
   exit 0
@@ -77,8 +78,7 @@ fi
 
 # ── Output warnings ───────────────────────────────────────────────
 if [ -n "$WARNINGS" ]; then
-  ESCAPED=$(echo "$WARNINGS" | sed 's/\\/\\\\/g; s/"/\\"/g')
-  echo "{\"additionalContext\": \"$ESCAPED\"}"
+  json_context "$WARNINGS"
 else
   echo "{}"
 fi

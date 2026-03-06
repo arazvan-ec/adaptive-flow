@@ -10,6 +10,9 @@
 set -euo pipefail
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
+# shellcheck source=lib.sh
+source "$PLUGIN_ROOT/hooks/lib.sh"
+
 MEMORY_DIR="$PLUGIN_ROOT/memory"
 
 CONTEXT="## Adaptive Flow — Post-Compaction Context
@@ -29,29 +32,13 @@ CONTEXT="## Adaptive Flow — Post-Compaction Context
 
 # ── Append high-influence insights ─────────────────────────────────
 INSIGHTS_FILE="$MEMORY_DIR/user-insights.yaml"
-if [ -f "$INSIGHTS_FILE" ]; then
-  HIGH_INSIGHTS=""
-  if command -v python3 &>/dev/null; then
-    HIGH_INSIGHTS=$(python3 -c "
-import yaml, sys
-try:
-    with open('$INSIGHTS_FILE') as f:
-        data = yaml.safe_load(f)
-    if data and 'insights' in data:
-        for i in data['insights']:
-            if i.get('influence') == 'high' and i.get('status') == 'active':
-                print(f\"- [{i['id']}] {i['observation']}\")
-except Exception:
-    pass
-" 2>/dev/null || true)
-  fi
+HIGH_INSIGHTS=$(parse_yaml_insights "$INSIGHTS_FILE" "high")
 
-  if [ -n "$HIGH_INSIGHTS" ]; then
-    CONTEXT="${CONTEXT}
+if [ -n "$HIGH_INSIGHTS" ]; then
+  CONTEXT="${CONTEXT}
 
 ### Active High-Influence Insights
 ${HIGH_INSIGHTS}"
-  fi
 fi
 
 # ── Append current task meta ───────────────────────────────────────
@@ -64,5 +51,4 @@ $(cat "$META_FILE" 2>/dev/null || true)"
 fi
 
 # ── Output as JSON ─────────────────────────────────────────────────
-ESCAPED=$(echo "$CONTEXT" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n' '\a' | sed 's/\a/\\n/g')
-echo "{\"additionalContext\": \"$ESCAPED\"}"
+json_context "$CONTEXT"

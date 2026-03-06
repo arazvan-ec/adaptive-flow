@@ -11,6 +11,8 @@ allowed-tools:
 
 # Skill: discover
 
+> **Help**: Analyze your stack and bootstrap memory. Usage: `/adaptive-flow:discover [--seed|--profile|--status]`
+
 Analiza el stack del proyecto y genera memoria inicial.
 Ideal para onboarding en un proyecto nuevo.
 
@@ -42,6 +44,13 @@ Ejecuta los 3 pasos de bootstrap:
 3. SUGGEST — Proponer insights especificos del stack
    → Anadir a memory/discovered-insights.yaml con status: proposed
    El usuario revisa con /adaptive-flow:insights-manager --review
+
+4. ADAPT GUIDES — Generar secciones stack-specific en core guides
+   → Leer core/security-guide.md, core/api-patterns.md, core/testing-guide.md
+   → Agregar una seccion "## Stack-Specific: {stack}" al final de cada guia
+   → Contenido basado en el stack detectado (ej: Express auth → helmet, cors, csrf)
+   → Solo agregar si la seccion no existe ya
+   → Las guias base (genericas) se mantienen intactas, el contenido stack-specific es un apendice
 ```
 
 ### --profile (solo analisis)
@@ -147,6 +156,39 @@ El discover genera insights adaptados al stack detectado. Ejemplos:
   confidence: 0.8
 ```
 
+## Guide Adaptation Examples
+
+### Security Guide — Express stack append:
+```markdown
+## Stack-Specific: TypeScript + Express
+
+- Use `helmet` middleware for HTTP security headers
+- Configure `cors` with explicit origins (never `*` in production)
+- Use `csurf` or double-submit cookie for CSRF protection
+- Sanitize input with `express-validator` at route level
+- Rate limiting with `express-rate-limit` on auth endpoints
+```
+
+### Testing Guide — Vitest stack append:
+```markdown
+## Stack-Specific: TypeScript + Vitest
+
+- Use `vi.mock()` for module mocking (not manual stubs)
+- Prefer `describe/it` over `test` for grouping
+- Use `beforeEach` for fresh fixtures, not shared state
+- Integration tests: use `supertest` for Express endpoints
+```
+
+### API Patterns — Django stack append:
+```markdown
+## Stack-Specific: Python + Django REST Framework
+
+- Use ViewSets for CRUD, APIView for custom logic
+- Serializers for validation AND response shaping
+- Use `select_related` / `prefetch_related` to avoid N+1
+- Pagination: `LimitOffsetPagination` for APIs, `CursorPagination` for large datasets
+```
+
 ## Output
 
 ```yaml
@@ -154,6 +196,7 @@ output:
   profile_generated: boolean
   stack_detected: string          # "typescript + express + prisma"
   insights_suggested: int         # Numero de insights propuestos
+  guides_adapted: int             # Numero de guias con secciones stack-specific agregadas
   profile_path: string            # Path al architecture profile
   next_step: string               # Sugerencia de que hacer despues
 ```

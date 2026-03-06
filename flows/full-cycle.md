@@ -1,6 +1,6 @@
 # Flow: Full Cycle (Gravedad 3)
 
-Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de alto riesgo.
+Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de alto riesgo. Al iniciar, confirmar: "Gravedad 3 — ciclo completo."
 
 ## Cuando
 
@@ -11,12 +11,12 @@ Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de
 
 ## Proceso
 
-> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
+> **Tier 2**: Al activar este flow, cargar insights completos (todas las influencias), `memory/learnings.yaml`, `memory/patterns.yaml` y `memory/next-briefing.md` si existen. Estos archivos no se cargan en session-init (Tier 1) para mantener el contexto minimo.
 
 ```
 0. Escribir meta.yaml en memory/current-task/ con:
    name, gravity: 3, flow: "full-cycle", started: fecha actual, status: "in_progress"
-1. Cargar Tier 2: insights completos + learnings + briefing
+1. Cargar Tier 2: insights completos + learnings.yaml + patterns.yaml + briefing
 
 PLANNING
 3. → Skill: planner (modo completo)

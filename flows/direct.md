@@ -1,6 +1,6 @@
 # Flow: Direct (Gravedad 1)
 
-Ejecucion directa para cambios triviales.
+Ejecucion directa para cambios triviales. Al iniciar, confirmar: "Gravedad 1 — ejecucion directa."
 
 ## Cuando
 

@@ -17,9 +17,23 @@ Subagente de revision multi-dimensional. Corre con contexto fresco (`context: fo
 Validar que la implementacion cumple con la spec, el diseno SOLID, y los
 estandares de calidad. Produce un QA report con veredicto APPROVED o REJECTED.
 
+## Multi-Perspective Review (configurable by gravity)
+
+The number of review perspectives scales with task gravity:
+
+| Gravity | Perspectives | Rationale |
+|---------|-------------|-----------|
+| 3 | 4: correctness, design, quality, security | Standard full review |
+| 4 | 6: + performance, + over-engineering | Extra scrutiny for complex/ambiguous tasks |
+
+For gravity 3: run all 4 perspectives.
+For gravity 4: add performance analysis (N+1 queries, unnecessary allocations, algorithmic complexity) and over-engineering detection (premature abstractions, unused flexibility, excessive indirection).
+
+Each perspective can be run as a parallel subagent for faster reviews. Results are synthesized into a single QA report.
+
 ## Dimensiones de Review
 
-El reviewer evalua en 4 dimensiones:
+El reviewer evalua en 4 dimensiones (6 for gravity 4):
 
 ### 1. Correctness (vs spec)
 
@@ -50,6 +64,20 @@ Referencia: `core/solid-reference.md`
 - Auth/authz correcto (si aplica)
 
 Referencia: `core/security-guide.md`
+
+### 5. Performance (gravity 4 only)
+
+- N+1 query patterns detected
+- Unnecessary allocations or copies
+- Algorithmic complexity appropriate for data size
+- Caching opportunities identified
+
+### 6. Over-Engineering (gravity 4 only)
+
+- No premature abstractions (used only once)
+- No excessive indirection (wrapper classes, unnecessary interfaces)
+- Complexity proportional to requirements
+- No gold-plating (features beyond spec)
 
 ## Contexto que recibe
 

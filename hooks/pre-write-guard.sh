@@ -21,12 +21,14 @@
 set -euo pipefail
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
+# shellcheck source=lib.sh
+source "$PLUGIN_ROOT/hooks/lib.sh"
 
 # Read stdin (tool input JSON)
 INPUT=$(cat)
 
 # Extract file_path from the JSON input
-FILE_PATH=$(echo "$INPUT" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' || true)
+FILE_PATH=$(printf '%s' "$INPUT" | parse_json_field "file_path")
 
 if [ -z "$FILE_PATH" ]; then
   # No file path found, allow
@@ -34,7 +36,6 @@ if [ -z "$FILE_PATH" ]; then
 fi
 
 FILENAME=$(basename "$FILE_PATH")
-DIRPATH=$(dirname "$FILE_PATH")
 
 # ── Check for sensitive files ──────────────────────────────────────
 SENSITIVE_PATTERNS=('.env' 'credentials' 'secret' '.key' '.pem' 'token' 'password')
@@ -51,23 +52,22 @@ done
 SUGGESTIONS=""
 
 # Auth/security files → security guide
-if echo "$FILE_PATH" | grep -qiE '(auth|security|login|session|token|jwt|oauth|permission|rbac)'; then
+if echo "$FILE_PATH" | grep -qiE '(auth|security|login|session|token|jwt|oauth|permission|rbac|password|encrypt|cipher|hash|csrf|xss|sanitize)'; then
   SUGGESTIONS="${SUGGESTIONS}Consider reviewing: core/security-guide.md (security-related file detected). "
 fi
 
 # API/controller/route files → API patterns guide
-if echo "$FILE_PATH" | grep -qiE '(controller|route|api|endpoint|handler|middleware)'; then
+if echo "$FILE_PATH" | grep -qiE '(controller|route|api|endpoint|handler|middleware|resolver|graphql|rest|webhook)'; then
   SUGGESTIONS="${SUGGESTIONS}Consider reviewing: core/api-patterns.md (API-related file detected). "
 fi
 
 # Test files → testing guide
-if echo "$FILE_PATH" | grep -qiE '\.(test|spec)\.(ts|js|py|rb|go|rs)$|_test\.(go|py|rb)$|test_.*\.py$'; then
+if echo "$FILE_PATH" | grep -qiE '\.(test|spec)\.(ts|js|py|rb|go|rs|java|kt)$|_test\.(go|py|rb)$|test_.*\.py$|Test\.java$|Tests?\.(cs|swift)$'; then
   SUGGESTIONS="${SUGGESTIONS}Consider reviewing: core/testing-guide.md (test file detected). "
 fi
 
 if [ -n "$SUGGESTIONS" ]; then
-  ESCAPED=$(echo "$SUGGESTIONS" | sed 's/\\/\\\\/g; s/"/\\"/g')
-  echo "{\"additionalContext\": \"$ESCAPED\"}"
+  json_context "$SUGGESTIONS"
 else
   echo "{}"
 fi

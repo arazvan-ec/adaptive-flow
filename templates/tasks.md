@@ -50,3 +50,11 @@ T-1 → T-2 → T-3 → T-4
 - [ ] All tests passing
 - [ ] Lint clean
 - [ ] Each task committed atomically
+
+<!-- If frontend: -->
+<!-- - [ ] Visual regression check -->
+<!-- - [ ] Responsive tested (mobile/tablet/desktop) -->
+
+<!-- If API: -->
+<!-- - [ ] API documentation updated -->
+<!-- - [ ] Migration scripts tested -->

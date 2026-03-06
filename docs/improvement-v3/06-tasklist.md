@@ -405,8 +405,34 @@
 
 ---
 
+## Track H: Test Fixes (Post-refactoring)
+
+> Objetivo: corregir tests rotos por refactorizacion de Track A
+> Completada: 2026-03-06
+
+- [x] **H1** [S] Actualizar setup() de 5 bats hooks para copiar lib.sh a temp dir
+  - Archivos: `tests/hooks/{session-init,post-compact,pre-write-guard,post-write-check,stop-check}.bats`
+  - Causa: Track A hizo que hooks hagan `source lib.sh`, pero tests usan tmpdir sin lib.sh
+
+- [x] **H2** [S] Actualizar stop-check.bats para formato session-aware del counter
+  - Archivos: `tests/hooks/stop-check.bats`
+  - Causa: Track A cambio counter de "2" a "session_id\n2"
+
+- [x] **H3** [S] Actualizar stop-check.bats para bugs corregidos de gravity parsing
+  - Archivos: `tests/hooks/stop-check.bats`
+  - Causa: Track A corrigio que gravity missing/non-numeric ahora defaults to 3
+
+- [x] **H4** [S] Actualizar validate-skills.bats conteo de skills 8→10
+  - Archivos: `tests/validate-skills.bats`
+  - Causa: Track C/E agregaron diagnostics y design-analyzer
+
+**Resultado**: 94/94 tests passing (25 validation + 69 hooks)
+
+---
+
 ## Resumen Post-v3
 
 | Track | Tareas | Completadas | Estado |
 |-------|--------|-------------|--------|
 | G: Hardening | 5 | 5 | `[x] Completada` |
+| H: Test Fixes | 4 | 4 | `[x] Completada` |

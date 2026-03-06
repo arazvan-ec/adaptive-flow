@@ -1,6 +1,6 @@
 # Tasklist: Mejora del Plugin Adaptive Flow v3.0
 
-> Estado: `EN PROGRESO` | Ultima actualizacion: 2026-03-05
+> Estado: `COMPLETADA` | Ultima actualizacion: 2026-03-06
 >
 > Leyenda: `[ ]` Pendiente | `[~]` En progreso | `[x]` Completada | `[!]` Bloqueada
 
@@ -139,43 +139,43 @@
 > Objetivo: hooks confiables, mantenibles, sin bugs silenciosos
 > Dependencia: D1 (jq requerido)
 
-- [ ] **A1** [S] Crear `hooks/lib.sh` con funcion `json_context()`
+- [x] **A1** [S] Crear `hooks/lib.sh` con funcion `json_context()`
   - Archivos: `hooks/lib.sh` (nuevo)
   - Funcion: recibe string, produce JSON con jq: `jq -n --arg ctx "$1" '{additionalContext: $ctx}'`
 
-- [ ] **A2** [S] Agregar funcion `parse_json_field()` a lib.sh
+- [x] **A2** [S] Agregar funcion `parse_json_field()` a lib.sh
   - Archivos: `hooks/lib.sh`
   - Funcion: extrae campo de JSON stdin con jq
 
-- [ ] **A3** [S] Agregar funcion `parse_yaml_insights()` a lib.sh
+- [x] **A3** [S] Agregar funcion `parse_yaml_insights()` a lib.sh
   - Archivos: `hooks/lib.sh`
   - Funcion: python3+yaml → fallback a grep. Centralizada, no duplicada.
 
-- [ ] **A4** [S] Refactorizar session-init.sh para usar lib.sh
+- [x] **A4** [S] Refactorizar session-init.sh para usar lib.sh
   - Archivos: `hooks/session-init.sh`
   - Reemplazar: escape manual → json_context(), parseo duplicado → parse_yaml_insights()
 
-- [ ] **A5** [S] Refactorizar post-compact.sh para usar lib.sh
+- [x] **A5** [S] Refactorizar post-compact.sh para usar lib.sh
   - Archivos: `hooks/post-compact.sh`
   - Reemplazar: escape manual → json_context(), parseo duplicado → parse_yaml_insights()
 
-- [ ] **A6** [S] Refactorizar pre-write-guard.sh para usar lib.sh
+- [x] **A6** [S] Refactorizar pre-write-guard.sh para usar lib.sh
   - Archivos: `hooks/pre-write-guard.sh`
   - Reemplazar: grep de file_path → parse_json_field(), escape manual → json_context()
 
-- [ ] **A7** [S] Refactorizar post-write-check.sh para usar lib.sh
+- [x] **A7** [S] Refactorizar post-write-check.sh para usar lib.sh
   - Archivos: `hooks/post-write-check.sh`
   - Reemplazar: grep de file_path → parse_json_field(), escape manual → json_context()
 
-- [ ] **A8** [S] Arreglar stop-check.sh: counter con session awareness
+- [x] **A8** [S] Arreglar stop-check.sh: counter con session awareness
   - Archivos: `hooks/stop-check.sh`
   - Cambio: incluir timestamp en counter file para distinguir sesiones
 
-- [ ] **A9** [S] Actualizar README.md con requisito de jq
+- [x] **A9** [S] Actualizar README.md con requisito de jq
   - Archivos: `README.md`
   - Agregar: jq como requisito en seccion de instalacion
 
-- [ ] **A10** [S] Actualizar plugin.json con requirements
+- [x] **A10** [S] Actualizar plugin.json con requirements
   - Archivos: `.claude-plugin/plugin.json`
   - Agregar: campo requirements con jq
 
@@ -186,37 +186,37 @@
 > Objetivo: memoria funcional con datos reales y cold start
 > Dependencia: D3 (datos reales del plugin)
 
-- [ ] **B1** [M] Extraer learnings reales del desarrollo v1→v2
+- [x] **B1** [M] Extraer learnings reales del desarrollo v1→v2
   - Archivos: `memory/learnings.yaml`
   - Fuente: analizar PLAN.md, TASKLIST.md, historial git
   - Minimo 5 learnings (pattern, anti-pattern, boundary)
 
-- [ ] **B2** [M] Extraer patterns reales del plugin
+- [x] **B2** [M] Extraer patterns reales del plugin
   - Archivos: `memory/patterns.yaml`
   - Fuente: patrones de codigo usados en hooks, skills, flows
   - Minimo 3 patterns con example_file
 
-- [ ] **B3** [S] Crear directorio memory/briefings/
+- [x] **B3** [S] Crear directorio memory/briefings/
   - Archivos: `memory/briefings/.gitkeep`
 
-- [ ] **B4** [S] Modificar compound-capture para guardar historial de briefings
+- [x] **B4** [S] Modificar compound-capture para guardar historial de briefings
   - Archivos: `skills/compound-capture/SKILL.md`
   - Cambio: antes de sobreescribir next-briefing.md, mover anterior a memory/briefings/{date}.md
 
-- [ ] **B5** [S] Marcar insights starter como influence: low por defecto
+- [x] **B5** [S] Marcar insights starter como influence: low por defecto
   - Archivos: `memory/user-insights.yaml`
   - Cambio: los 5 insights medium pasan a low. Solo los 3 high se mantienen.
   - Razon: son genericos, el usuario los valida con el tiempo
 
-- [ ] **B6** [S] Documentar taxonomia de memoria
+- [x] **B6** [S] Documentar taxonomia de memoria
   - Archivos: `memory/README.md` (nuevo)
   - Contenido: que tipo es cada archivo (episodic, semantic, entity), como se usa, decay policy
 
-- [ ] **B7** [S] Limpiar framework-analysis.md obsoleto
+- [x] **B7** [S] Limpiar framework-analysis.md obsoleto
   - Archivos: `memory/framework-analysis.md`
   - Accion: eliminar o reemplazar con referencia a docs/improvement-v3/01-analysis.md
 
-- [ ] **B8** [S] Verificar closed compound loop
+- [x] **B8** [S] Verificar closed compound loop
   - Archivos: `flows/plan-execute.md`, `flows/full-cycle.md`
   - Verificar: planner y reviewer leen learnings.yaml y patterns.yaml
   - Si no, agregar instrucciones explicitas
@@ -228,30 +228,30 @@
 > Objetivo: mejorar experiencia de usuario y descubribilidad del plugin
 > Dependencia: ninguna (independiente)
 
-- [ ] **C1** [S] Agregar feedback visible del routing en CLAUDE.md
+- [x] **C1** [S] Agregar feedback visible del routing en CLAUDE.md
   - Archivos: `CLAUDE.md`
   - Cambio: agregar instruccion "Al clasificar, comunicar al usuario: Gravedad N porque X"
   - Una linea antes de ejecutar el flow
 
-- [ ] **C2** [S] Agregar instruccion de feedback en cada flow
+- [x] **C2** [S] Agregar instruccion de feedback en cada flow
   - Archivos: `flows/direct.md`, `flows/plan-execute.md`, `flows/full-cycle.md`, `flows/shape-first.md`
   - Cambio: primera linea de cada flow confirma gravedad asignada
 
-- [ ] **C3** [S] Crear seccion de troubleshooting en README
+- [x] **C3** [S] Crear seccion de troubleshooting en README
   - Archivos: `README.md`
   - Contenido: requisitos (python3+yaml, jq), como verificar activacion, errores comunes
 
-- [ ] **C4** [S] Enriquecer plugin.json con metadatos
+- [x] **C4** [S] Enriquecer plugin.json con metadatos
   - Archivos: `.claude-plugin/plugin.json`
   - Agregar: author, license, requirements, claude_code_version_min
   - Nota: coordinar con A10 si se ejecuta Track A primero
 
-- [ ] **C5** [M] Crear skill de diagnostico / dry-run
+- [x] **C5** [M] Crear skill de diagnostico / dry-run
   - Archivos: `skills/diagnostics/SKILL.md` (nuevo)
   - Funcion: `/adaptive-flow:diagnostics` muestra gravedad estimada, flow, insights aplicables, estado memoria
   - Util para debug y verificacion sin ejecutar el flow
 
-- [ ] **C6** [S] Agregar --help a skills invocables
+- [x] **C6** [S] Agregar --help a skills invocables
   - Archivos: `skills/compound-capture/SKILL.md`, `skills/insights-manager/SKILL.md`, `skills/discover/SKILL.md`, `skills/solid-analyzer/SKILL.md`
   - Cambio: primer parrafo de cada SKILL.md sirve como help inline
 
@@ -262,33 +262,33 @@
 > Objetivo: aprovechar features nuevas de Claude Code (2026)
 > Dependencia: parcial de Track A (hooks refactorizados facilitan nuevos hooks)
 
-- [ ] **D1** [S] Usar CLAUDE_ENV_FILE para persistir estado de sesion
+- [x] **D1** [S] Usar CLAUDE_ENV_FILE para persistir estado de sesion
   - Archivos: `hooks/session-init.sh`
   - Cambio: escribir gravity, flow activo, task name en CLAUDE_ENV_FILE
   - Reemplaza archivos temporales para estado de sesion
 
-- [ ] **D2** [M] Agregar hook SubagentStart para inyectar contexto
+- [x] **D2** [M] Agregar hook SubagentStart para inyectar contexto
   - Archivos: `hooks/hooks.json`, `hooks/subagent-start.sh` (nuevo)
   - Funcion: inyectar insights y task meta relevantes a subagentes
   - Evento: SubagentStart
 
-- [ ] **D3** [M] Agregar hooks PostToolUseFailure y TaskCompleted
+- [x] **D3** [M] Agregar hooks PostToolUseFailure y TaskCompleted
   - Archivos: `hooks/hooks.json`, `hooks/tool-failure.sh` (nuevo), `hooks/task-completed.sh` (nuevo)
   - PostToolUseFailure: logging de fallos, sugerencias de recovery
   - TaskCompleted: trigger para actualizar estado del task
 
-- [ ] **D4** [M] Evaluar Prompt hooks para pre-write-guard
+- [x] **D4** [M] Evaluar Prompt hooks para pre-write-guard
   - Archivos: `hooks/pre-write-guard.sh` o nuevo prompt hook
   - Evaluacion: comparar pattern matching actual vs evaluacion semantica
   - Entregable: documento de decision con pros/cons y recomendacion
 
-- [ ] **D5** [M] Evaluar y documentar viabilidad de Agent Teams para G3+
+- [x] **D5** [M] Evaluar y documentar viabilidad de Agent Teams para G3+
   - Archivos: `docs/improvement-v3/agent-teams-evaluation.md` (nuevo)
   - Evaluar: planner + implementer + reviewer como teammates vs subagentes
   - Documentar: coste (5-7x tokens), beneficios, cuando tiene sentido
   - Decision D2: solo evaluacion, no implementacion en v3
 
-- [ ] **D6** [L] Implementar review multi-perspectiva configurable
+- [x] **D6** [L] Implementar review multi-perspectiva configurable
   - Archivos: `skills/reviewer/SKILL.md`
   - G3: 4 perspectivas (correctness, design, quality, security)
   - G4: 6 perspectivas (+performance, +over-engineering)
@@ -302,33 +302,33 @@
 > Objetivo: hacer el contenido adaptativo y mas util
 > Dependencia: ninguna (independiente)
 
-- [ ] **E1** [S] Completar guide triggers P2-3 en pre-write-guard
+- [x] **E1** [S] Completar guide triggers P2-3 en pre-write-guard
   - Archivos: `hooks/pre-write-guard.sh`
   - Completar detecciones: auth/security patterns, controller/route/api, test files
   - Verificar que additionalContext se inyecta correctamente
 
-- [ ] **E2** [S] Limpiar framework-analysis.md obsoleto
+- [x] **E2** [S] Limpiar framework-analysis.md obsoleto
   - Archivos: `memory/framework-analysis.md`
   - Accion: eliminar contenido obsoleto, reemplazar con referencia a docs/improvement-v3/01-analysis.md
   - Nota: coordinar con B7 si se ejecuta Track B primero (misma tarea)
 
-- [ ] **E3** [M] Renombrar solid-analyzer a design-analyzer con modo pluggable
+- [x] **E3** [M] Renombrar solid-analyzer a design-analyzer con modo pluggable
   - Archivos: `skills/solid-analyzer/SKILL.md` → `skills/design-analyzer/SKILL.md`
   - Mantener SOLID como default para OOP
   - Agregar: composicion (FP), bounded contexts (microservices), component architecture (frontend)
   - El analyzer detecta paradigma via discover/architect profile y aplica framework correcto
   - Decision D5: pluggable completo
 
-- [ ] **E4** [S] Crear guias core alternativas para paradigmas no-OOP
+- [x] **E4** [S] Crear guias core alternativas para paradigmas no-OOP
   - Archivos: `core/fp-principles.md` (nuevo), `core/component-architecture.md` (nuevo)
   - Contenido: principios equivalentes a SOLID para FP y frontend
   - Referenciados por design-analyzer segun paradigma detectado
 
-- [ ] **E5** [S] Hacer templates adaptativos por tipo de proyecto
+- [x] **E5** [S] Hacer templates adaptativos por tipo de proyecto
   - Archivos: `templates/spec.md`, `templates/design.md`, `templates/tasks.md`, `templates/retrospective.md`
   - Agregar secciones condicionales: "Si frontend, incluir...", "Si API, incluir..."
 
-- [ ] **E6** [S] Verificar closed compound loop
+- [x] **E6** [S] Verificar closed compound loop
   - Archivos: `flows/plan-execute.md`, `flows/full-cycle.md`
   - Verificar: planner y reviewer leen learnings.yaml y patterns.yaml
   - Si no, agregar instrucciones explicitas de lectura
@@ -350,12 +350,12 @@
 | Track implementacion | Tareas | Completadas | Estado |
 |---------------------|--------|-------------|--------|
 | F: Testing y CI/CD | 9 | 8 | `[x] Completada` |
-| A: Robustez Hooks | 10 | 0 | `[ ] Pendiente` |
-| B: Sistema de Memoria | 8 | 0 | `[ ] Pendiente` |
-| C: UX y Onboarding | 6 | 0 | `[ ] Pendiente` |
-| D: Integracion Claude Code | 6 | 0 | `[ ] Pendiente` |
-| E: Contenido y Guias | 6 | 0 | `[ ] Pendiente` |
-| **Total v3** | **44** | **8** | **18%** |
+| A: Robustez Hooks | 10 | 10 | `[x] Completada` |
+| B: Sistema de Memoria | 8 | 8 | `[x] Completada` |
+| C: UX y Onboarding | 6 | 6 | `[x] Completada` |
+| D: Integracion Claude Code | 6 | 6 | `[x] Completada` |
+| E: Contenido y Guias | 6 | 6 | `[x] Completada` |
+| **Total v3** | **44** | **44** | **100%** |
 
 ### Notas de coordinacion entre tracks
 

@@ -11,6 +11,8 @@ allowed-tools:
 
 # Skill: compound-capture
 
+> **Help**: Extracts patterns, learnings, and insights from a completed feature. Run after finishing gravity 3+ tasks. Usage: `/adaptive-flow:compound-capture`
+
 Captura de conocimiento post-feature. Extrae patterns, learnings, insights
 y genera briefing para la siguiente tarea.
 

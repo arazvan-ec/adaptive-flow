@@ -9,6 +9,8 @@ allowed-tools:
 
 # Skill: solid-analyzer
 
+> **Help**: Analyze code against SOLID principles. Usage: `/adaptive-flow:solid-analyzer [--mode=baseline|design|verify]`
+
 Analisis SOLID contextual con multiples modos de operacion.
 
 ## Invocacion

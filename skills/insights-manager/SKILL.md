@@ -10,6 +10,8 @@ allowed-tools:
 
 # Skill: insights-manager
 
+> **Help**: Manage your AI working insights. Add, review, pause, retire, or promote insights. Usage: `/adaptive-flow:insights-manager [--add|--review|--pause ID|--retire ID|--promote ID]`
+
 CRUD de insights del usuario. Permite gestionar el meta-conocimiento
 sobre como trabajar con IA de forma efectiva.
 

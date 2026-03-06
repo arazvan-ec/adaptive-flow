@@ -1,6 +1,6 @@
 # Flow: Shape First (Gravedad 4)
 
-Descubrimiento antes de planificar. Para tareas con scope ambiguo o incertidumbre tecnica.
+Descubrimiento antes de planificar. Para tareas con scope ambiguo o incertidumbre tecnica. Al iniciar, confirmar: "Gravedad 4 — investigacion primero."
 
 ## Cuando
 

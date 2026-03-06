@@ -11,6 +11,8 @@ allowed-tools:
 
 # Skill: discover
 
+> **Help**: Analyze your stack and bootstrap memory. Usage: `/adaptive-flow:discover [--seed|--profile|--status]`
+
 Analiza el stack del proyecto y genera memoria inicial.
 Ideal para onboarding en un proyecto nuevo.
 

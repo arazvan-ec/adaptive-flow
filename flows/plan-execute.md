@@ -1,6 +1,6 @@
 # Flow: Plan-Execute (Gravedad 2)
 
-Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren planificar.
+Plan ligero seguido de ejecucion. Para tareas de scope claro que requieren planificar. Al iniciar, confirmar: "Gravedad 2 — plan + ejecucion."
 
 ## Cuando
 

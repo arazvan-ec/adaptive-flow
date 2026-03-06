@@ -31,14 +31,19 @@
 - **Public Interface**: {metodos/endpoints}
 - **Dependencies**: {abstracciones}
 
-## SOLID Analysis
+## Design Analysis
 
-| Component | S | R | P | I | D | Notes |
-|-----------|---|---|---|---|---|-------|
+<!-- For OOP projects: SOLID Analysis -->
+<!-- For FP projects: Composition Analysis (see core/fp-principles.md) -->
+<!-- For Frontend projects: Component Architecture Analysis (see core/component-architecture.md) -->
+
+| Component | P1 | P2 | P3 | P4 | P5 | Notes |
+|-----------|----|----|----|----|-----|-------|
 | {comp 1} | OK | OK | OK | OK | OK | |
 | {comp 2} | OK | OK | OK | OK | OK | |
 
 > Legend: OK = compliant, WARN = improvable, FAIL = violates (requires alternative)
+> Principles depend on paradigm: SOLID (OOP), Composition (FP), Component Architecture (Frontend)
 
 ## Data Flow
 

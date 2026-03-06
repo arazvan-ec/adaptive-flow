@@ -1,6 +1,6 @@
 # Flow: Full Cycle (Gravedad 3)
 
-Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de alto riesgo.
+Ciclo completo: plan → TDD → review → compound. Para tareas complejas o de alto riesgo. Al iniciar, confirmar: "Gravedad 3 — ciclo completo."
 
 ## Cuando
 

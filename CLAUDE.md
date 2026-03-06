@@ -16,6 +16,8 @@ Antes de actuar, clasifica la solicitud:
 
 Si la confianza en la clasificacion es < 60%, preguntar al usuario.
 
+**Al clasificar, comunicar al usuario**: "Gravedad N porque [razon breve]" antes de ejecutar el flow.
+
 ## En cada decision, consultar:
 
 1. `memory/user-insights.yaml` — Heuristicas del usuario (influence: high → aplicar, medium → considerar)

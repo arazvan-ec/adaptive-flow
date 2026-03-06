@@ -189,5 +189,5 @@ MD
 @test "validates actual project skills successfully" {
   run bash "$SCRIPT"
   [ "$status" -eq 0 ]
-  [[ "$output" == *"8 skill(s) validated successfully"* ]]
+  [[ "$output" == *"10 skill(s) validated successfully"* ]]
 }

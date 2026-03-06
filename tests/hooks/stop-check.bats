@@ -6,6 +6,8 @@ setup() {
   export TEST_DIR="$(mktemp -d)"
   export CLAUDE_PLUGIN_ROOT="$TEST_DIR"
   mkdir -p "$TEST_DIR/memory/current-task"
+  mkdir -p "$TEST_DIR/hooks"
+  cp "$BATS_TEST_DIRNAME/../../hooks/lib.sh" "$TEST_DIR/hooks/lib.sh"
 
   HOOK="$BATS_TEST_DIRNAME/../../hooks/stop-check.sh"
 }
@@ -110,12 +112,13 @@ YAML
 task: big-feature
 gravity: 3
 YAML
-  # Simulate 2 previous blocks
-  echo "2" > "$TEST_DIR/memory/current-task/.stop-block-count"
+  # Simulate 2 previous blocks with session-aware counter format
+  SESSION_ID="${CLAUDE_SESSION_ID:-$(date +%Y%m%d)}"
+  printf '%s\n%s\n' "$SESSION_ID" "2" > "$TEST_DIR/memory/current-task/.stop-block-count"
 
   run bash "$HOOK"
   [ "$status" -eq 0 ]
-  [ "$output" = "{}" ]
+  [[ "$output" == "{}" ]]
 }
 
 @test "cleans up counter file after allowing forced stop" {
@@ -123,7 +126,8 @@ YAML
 task: big-feature
 gravity: 3
 YAML
-  echo "2" > "$TEST_DIR/memory/current-task/.stop-block-count"
+  SESSION_ID="${CLAUDE_SESSION_ID:-$(date +%Y%m%d)}"
+  printf '%s\n%s\n' "$SESSION_ID" "2" > "$TEST_DIR/memory/current-task/.stop-block-count"
 
   run bash "$HOOK"
   [ "$status" -eq 0 ]
@@ -131,27 +135,29 @@ YAML
 }
 
 # ── Malformed meta.yaml ──────────────────────────────────────────
+# These bugs were fixed in Track A (lib.sh refactor with parse_yaml_field).
+# Missing gravity now defaults to 3 (enforce), non-numeric gravity also defaults to 3.
 
-@test "crashes on missing gravity field (bug: set -e + grep no match, fix in Track A)" {
-  # BUG: set -euo pipefail causes script to crash when grep finds no gravity line.
-  # The default-to-3 logic never runs because the pipeline exits first.
-  # Track A (lib.sh refactor) will fix this by using a safer parsing function.
+@test "defaults to gravity 3 when gravity field missing (fixed in Track A)" {
   cat > "$TEST_DIR/memory/current-task/meta.yaml" <<'YAML'
 task: unknown-task
 status: in_progress
 YAML
 
   run bash "$HOOK"
-  [ "$status" -ne 0 ]
+  [ "$status" -eq 0 ]
+  # Should block (defaults to gravity 3, no retrospective)
+  [[ "$output" == *'"decision"'*'"block"'* ]]
 }
 
-@test "crashes on non-numeric gravity (bug: set -e + grep no match, fix in Track A)" {
-  # Same bug as above: grep -E '^gravity:\s*[0-9]+' returns no match for 'gravity: high'
+@test "defaults to gravity 3 when gravity is non-numeric (fixed in Track A)" {
   cat > "$TEST_DIR/memory/current-task/meta.yaml" <<'YAML'
 task: broken
 gravity: high
 YAML
 
   run bash "$HOOK"
-  [ "$status" -ne 0 ]
+  [ "$status" -eq 0 ]
+  # Should block (defaults to gravity 3, no retrospective)
+  [[ "$output" == *'"decision"'*'"block"'* ]]
 }

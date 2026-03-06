@@ -6,6 +6,8 @@ setup() {
   export TEST_DIR="$(mktemp -d)"
   export CLAUDE_PLUGIN_ROOT="$TEST_DIR"
   mkdir -p "$TEST_DIR/memory/current-task"
+  mkdir -p "$TEST_DIR/hooks"
+  cp "$BATS_TEST_DIRNAME/../../hooks/lib.sh" "$TEST_DIR/hooks/lib.sh"
 
   HOOK="$BATS_TEST_DIRNAME/../../hooks/post-write-check.sh"
 }

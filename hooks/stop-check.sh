@@ -13,18 +13,37 @@
 set -euo pipefail
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-.}"
+# shellcheck source=lib.sh
+source "$PLUGIN_ROOT/hooks/lib.sh"
+
 TASK_DIR="$PLUGIN_ROOT/memory/current-task"
 META_FILE="$TASK_DIR/meta.yaml"
 
 # ── Prevent infinite loops ─────────────────────────────────────────
 # Track how many times the hook has blocked stop using a counter file.
-# The counter lives inside the task directory (not /tmp) so it can't be
-# trivially deleted without also modifying the task workspace.
+# Include a session timestamp so stale counters from old sessions
+# don't carry over and prevent stopping in new sessions.
 BLOCK_COUNTER_FILE="$TASK_DIR/.stop-block-count"
 BLOCK_COUNT=0
+SESSION_ID="${CLAUDE_SESSION_ID:-$(date +%Y%m%d)}"
+
 if [ -f "$BLOCK_COUNTER_FILE" ]; then
-  BLOCK_COUNT=$(cat "$BLOCK_COUNTER_FILE" 2>/dev/null || echo "0")
+  STORED_SESSION=$(head -1 "$BLOCK_COUNTER_FILE" 2>/dev/null || echo "")
+  STORED_COUNT=$(tail -1 "$BLOCK_COUNTER_FILE" 2>/dev/null || echo "0")
+
+  if [ "$STORED_SESSION" = "$SESSION_ID" ]; then
+    BLOCK_COUNT="$STORED_COUNT"
+  else
+    # Different session — reset counter
+    BLOCK_COUNT=0
+  fi
 fi
+
+# Ensure BLOCK_COUNT is numeric
+if ! [[ "$BLOCK_COUNT" =~ ^[0-9]+$ ]]; then
+  BLOCK_COUNT=0
+fi
+
 # After blocking twice, allow stop to prevent truly infinite loops
 if [ "$BLOCK_COUNT" -ge 2 ]; then
   rm -f "$BLOCK_COUNTER_FILE"
@@ -40,13 +59,9 @@ if [ ! -f "$META_FILE" ]; then
 fi
 
 # ── Parse gravity from meta.yaml ───────────────────────────────────
-# Use grep as the primary parser (no external dependencies).
-# Only accept numeric values; default to 3 (safe/strict) if unparseable
-# to avoid silently bypassing enforcement for high-gravity tasks.
-GRAVITY=$(grep -E '^gravity:\s*[0-9]+' "$META_FILE" 2>/dev/null | head -1 | awk '{print $2}')
+GRAVITY=$(parse_yaml_field "$META_FILE" "gravity")
 if ! [[ "$GRAVITY" =~ ^[0-9]+$ ]]; then
   # If gravity cannot be parsed, default to 3 (enforce) rather than 0 (skip).
-  # This prevents bypassing enforcement when the file is malformed.
   GRAVITY=3
 fi
 
@@ -64,6 +79,7 @@ if [ -f "$TASK_DIR/retrospective.md" ]; then
 fi
 
 # ── Block stop and remind about compound-capture ───────────────────
-# Increment block counter (stored in task dir, not /tmp)
-echo $((BLOCK_COUNT + 1)) > "$BLOCK_COUNTER_FILE"
-echo "{\"decision\": \"block\", \"reason\": \"This is a gravity ${GRAVITY} task. Run /adaptive-flow:compound-capture before completing to extract learnings and patterns. This maintains the compound engineering loop.\"}"
+# Increment block counter with session awareness
+printf '%s\n%s\n' "$SESSION_ID" "$((BLOCK_COUNT + 1))" > "$BLOCK_COUNTER_FILE"
+
+json_decision_block "This is a gravity ${GRAVITY} task. Run /adaptive-flow:compound-capture before completing to extract learnings and patterns. This maintains the compound engineering loop."

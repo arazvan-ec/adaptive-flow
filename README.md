@@ -5,7 +5,13 @@ Adapts process gravity to task complexity.
 
 ## Quick Start
 
-### 1. Install
+### 1. Requirements
+
+- **Claude Code** (CLI)
+- **jq** — Required for reliable JSON handling in hooks (`brew install jq` / `apt install jq`)
+- **python3 + PyYAML** — Recommended for YAML parsing (falls back to grep if unavailable)
+
+### 2. Install
 
 Place the `adaptive-flow/` directory inside your project's `plugins/` folder
 (or wherever your Claude Code plugins live).
@@ -19,7 +25,7 @@ your-project/
 └── src/
 ```
 
-### 2. First Use
+### 3. First Use
 
 Just ask Claude to do something. The framework activates automatically:
 
@@ -30,7 +36,7 @@ Just ask Claude to do something. The framework activates automatically:
 
 You don't need to memorize this — Claude reads `CLAUDE.md` and routes for you.
 
-### 3. Make It Yours
+### 4. Make It Yours
 
 Add your first insight to teach the AI how YOU prefer to work:
 
@@ -119,3 +125,27 @@ Tests pass before commit. Plan exists before implementation. No relying on memor
 
 **Compound** — Every completed feature feeds knowledge into the next one.
 Patterns, learnings, and insights accumulate and improve future work.
+
+## Troubleshooting
+
+**Hooks not running?**
+- Verify the plugin is in the correct `plugins/` directory
+- Check that `hooks/hooks.json` exists and is valid JSON
+- Ensure hook scripts are executable: `chmod +x hooks/*.sh`
+
+**YAML parsing errors?**
+- Install PyYAML: `pip3 install pyyaml`
+- Hooks fall back to grep-based parsing if python3/yaml unavailable, but it's less precise
+
+**jq not found?**
+- Install: `brew install jq` (macOS) / `apt install jq` (Ubuntu) / `choco install jq` (Windows)
+- Hooks fall back to manual JSON escaping without jq, but jq is strongly recommended
+
+**Gravity classification seems wrong?**
+- Run `/adaptive-flow:diagnostics` to see the estimated gravity and reasoning
+- The router asks for confirmation when confidence < 60%
+
+**Memory not loading?**
+- Check `memory/user-insights.yaml` is valid YAML
+- Verify insights have `status: active` and correct `influence` level
+- Run `/adaptive-flow:discover --status` to check memory state

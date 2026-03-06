@@ -1,5 +1,12 @@
 {
   "name": "adaptive-flow",
-  "version": "2.0.0",
-  "description": "Compound engineering framework for Claude Code. Adapts process gravity to task complexity. Skills are auto-discovered from skills/*/SKILL.md."
+  "version": "3.0.0",
+  "description": "Compound engineering framework for Claude Code. Adapts process gravity to task complexity. Skills are auto-discovered from skills/*/SKILL.md.",
+  "author": "arazvan-ec",
+  "license": "MIT",
+  "requirements": {
+    "jq": "required — reliable JSON handling in hooks",
+    "python3": "recommended — YAML parsing (falls back to grep)",
+    "pyyaml": "recommended — python3 YAML library"
+  }
 }

@@ -84,6 +84,23 @@ $META_SUMMARY
   fi
 fi
 
+# ── Persist session state via CLAUDE_ENV_FILE ─────────────────────
+# If CLAUDE_ENV_FILE is available, write session state for other hooks
+if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+  {
+    echo "ADAPTIVE_FLOW_ACTIVE=true"
+    # Extract gravity and flow from current task meta if available
+    if [ -f "$META_FILE" ]; then
+      TASK_GRAVITY=$(parse_yaml_field "$META_FILE" "gravity")
+      TASK_FLOW=$(parse_yaml_field "$META_FILE" "flow")
+      TASK_NAME=$(parse_yaml_field "$META_FILE" "name")
+      [ -n "$TASK_GRAVITY" ] && echo "ADAPTIVE_FLOW_GRAVITY=$TASK_GRAVITY"
+      [ -n "$TASK_FLOW" ] && echo "ADAPTIVE_FLOW_FLOW=$TASK_FLOW"
+      [ -n "$TASK_NAME" ] && echo "ADAPTIVE_FLOW_TASK=$TASK_NAME"
+    fi
+  } >> "$CLAUDE_ENV_FILE"
+fi
+
 # ── Output combined context ────────────────────────────────────────
 if [ ${#CONTEXT_PARTS[@]} -gt 0 ]; then
   COMBINED=""

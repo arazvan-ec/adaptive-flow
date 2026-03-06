@@ -18,4 +18,46 @@
 # referencia de como se hacen las cosas en este proyecto.
 # ─────────────────────────────────────────────────────────────────────
 
-patterns: []
+patterns:
+
+  # ── Extracted from plugin codebase ──
+
+  - id: shared-hook-lib
+    name: "Shared Hook Library"
+    description: "Centralized utility functions (json_context, parse_json_field, parse_yaml_insights) sourced by all hooks. Prevents code duplication and ensures consistent JSON output."
+    example_file: hooks/lib.sh
+    usage_count: 5
+    tags: [hooks, shell, DRY]
+    captured: 2026-03-06
+
+  - id: tiered-context-loading
+    name: "Tiered Memory Loading"
+    description: "Three-tier context loading: Tier 1 (session-init, always), Tier 2 (flow activation, gravity 2+), Tier 3 (on-demand, pre-write-guard). Minimizes token usage."
+    example_file: hooks/session-init.sh
+    usage_count: 3
+    tags: [memory, context-engineering, hooks]
+    captured: 2026-03-06
+
+  - id: skill-frontmatter-convention
+    name: "Skill Frontmatter Convention"
+    description: "Every SKILL.md starts with YAML frontmatter (context: fork, allowed-tools: [...]) for auto-discovery and sandboxed execution."
+    example_file: skills/planner/SKILL.md
+    usage_count: 8
+    tags: [skills, convention, auto-discovery]
+    captured: 2026-03-06
+
+  - id: gravity-based-flow-routing
+    name: "Gravity-Based Flow Routing"
+    description: "CLAUDE.md routing table maps task complexity (gravity 1-4) to process flows (direct/plan-execute/full-cycle/shape-first). Single entry point, proportional process."
+    example_file: CLAUDE.md
+    usage_count: 1
+    tags: [routing, architecture, flows]
+    captured: 2026-03-06
+
+  - id: python-yaml-with-grep-fallback
+    name: "Python YAML + Grep Fallback"
+    description: "Parse YAML with python3+PyYAML for accuracy, fall back to grep for environments without Python. Used in hooks for YAML insight extraction."
+    example_file: hooks/lib.sh
+    usage_count: 2
+    tags: [yaml, parsing, resilience]
+    captured: 2026-03-06

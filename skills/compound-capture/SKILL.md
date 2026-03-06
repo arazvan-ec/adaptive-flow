@@ -53,6 +53,7 @@ y genera briefing para la siguiente tarea.
       → Escribir memory/current-task/retrospective.md
 
 3. Generar briefing para proxima tarea:
+   → Si memory/next-briefing.md ya existe, mover a memory/briefings/{YYYY-MM-DD}.md antes de sobreescribir
    → Escribir memory/next-briefing.md
    Contenido: top 3 learnings relevantes + patterns reutilizables + warnings
 ```
